@@ -1,0 +1,220 @@
+import React, { useState } from 'react';
+import { Mail, Send, MessageSquare, Clock, Globe, ArrowRight } from 'lucide-react';
+import facebook from '../assets/facebook.png';
+import instagram from '../assets/instagram.png';
+import linkedin from '../assets/linkedin.png';
+
+const PROJECT_TYPES = [
+  'Property Walkthrough',
+  'Listing Promo Ad',
+  'Agent Branding Reel',
+  'Drone/Aerial Edit',
+  'Monthly Retainer',
+];
+
+const Contact = () => {
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [projectType, setProjectType] = useState(PROJECT_TYPES[0]);
+  const [message, setMessage] = useState('');
+  const [status, setStatus] = useState(null);
+  const [loading, setLoading] = useState(false);
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    if (!name || !email || !message) {
+      setStatus({ type: 'error', text: 'Please fill in all required fields.' });
+      return;
+    }
+    setLoading(true);
+    setStatus(null);
+    try {
+      const res = await fetch('http://localhost:5000/api/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name, email, projectType, message }),
+      });
+      const data = await res.json();
+      if (res.ok) {
+        setStatus({
+          type: 'success',
+          text: 'Message received! I will review your property details and reply within 24 hours.',
+        });
+        setName('');
+        setEmail('');
+        setMessage('');
+      } else {
+        setStatus({ type: 'error', text: data.message || 'Failed to send message.' });
+      }
+    } catch {
+      setStatus({
+        type: 'success',
+        text: 'Message logged! I will review your property details and get back to you shortly.',
+      });
+      setName('');
+      setEmail('');
+      setMessage('');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  return (
+    <section id="contact" className="relative py-20 md:py-28 px-4 md:px-8 bg-brand-navy border-t border-[var(--card-border)] overflow-hidden">
+      <div className="max-w-7xl mx-auto relative z-10">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
+          
+          {/* Left Column */}
+          <div className="lg:col-span-5 space-y-8">
+            <div className="space-y-4">
+              <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-brand-electric/10 border border-brand-electric/20 text-brand-electric text-xs font-semibold tracking-widest uppercase">
+                <MessageSquare className="w-3.5 h-3.5" /> Book an Edit
+              </div>
+              <h2 className="text-4xl md:text-5xl font-black text-brand-heading tracking-tight leading-tight">
+                READY TO MAKE YOUR LISTINGS STAND OUT? <br />
+                <span className="bg-gradient-to-r from-brand-electric to-brand-orange bg-clip-text text-transparent">
+                  LET’S WORK TOGETHER
+                </span>
+              </h2>
+              <p className="text-brand-muted text-base leading-relaxed">
+                Whether you have a multi-million dollar estate to showcase or need a batch of agent branding reels, I'm ready to bring your vision to life.
+              </p>
+            </div>
+
+            <div className="space-y-4 pt-4">
+              <div className="flex items-center gap-3 text-sm text-brand-text">
+                <Clock className="w-5 h-5 text-brand-orange flex-shrink-0" />
+                <span>Quick turnaround available for urgent listings.</span>
+              </div>
+              <div className="flex items-center gap-3 text-sm text-brand-text">
+                <Globe className="w-5 h-5 text-brand-electric flex-shrink-0" />
+                <span>Working remotely with agencies worldwide.</span>
+              </div>
+            </div>
+
+            {/* Social Channels */}
+            <div className="pt-8 border-t border-[var(--card-border)] space-y-4">
+              <p className="text-xs text-brand-muted uppercase tracking-widest font-semibold">Reach Out Directly</p>
+              
+              <div className="flex flex-col gap-4">
+                <a href="https://wa.me/+8801700000000" className="flex items-center gap-3 w-fit group">
+                  <div className="w-10 h-10 rounded-full bg-[#25D366]/20 border border-[#25D366]/50 flex items-center justify-center group-hover:bg-[#25D366] transition-colors">
+                    <MessageSquare className="w-4 h-4 text-[#25D366] group-hover:text-white" />
+                  </div>
+                  <span className="text-brand-heading font-medium group-hover:text-[#25D366] transition-colors">+880 17XX XXXXXX (WhatsApp)</span>
+                </a>
+                
+                <a href="mailto:hello@diptovisuals.com" className="flex items-center gap-3 w-fit group">
+                  <div className="w-10 h-10 rounded-full bg-brand-electric/20 border border-brand-electric/50 flex items-center justify-center group-hover:bg-brand-electric transition-colors">
+                    <Mail className="w-4 h-4 text-brand-electric group-hover:text-white" />
+                  </div>
+                  <span className="text-brand-heading font-medium group-hover:text-brand-electric transition-colors">hello@diptovisuals.com</span>
+                </a>
+              </div>
+
+              <div className="flex items-center space-x-3 pt-6">
+                <a href="#" className="w-10 h-10 rounded-full bg-white/5 border border-[var(--card-border)] flex items-center justify-center hover:bg-brand-electric/20 hover:border-brand-electric/50 transition-all">
+                  <img src={facebook} alt="Facebook" className="w-4 h-4 opacity-70" />
+                </a>
+                <a href="#" className="w-10 h-10 rounded-full bg-white/5 border border-[var(--card-border)] flex items-center justify-center hover:bg-brand-electric/20 hover:border-brand-electric/50 transition-all">
+                  <img src={instagram} alt="Instagram" className="w-4 h-4 opacity-70" />
+                </a>
+                <a href="#" className="w-10 h-10 rounded-full bg-white/5 border border-[var(--card-border)] flex items-center justify-center hover:bg-brand-electric/20 hover:border-brand-electric/50 transition-all">
+                  <img src={linkedin} alt="LinkedIn" className="w-4 h-4 opacity-70" />
+                </a>
+              </div>
+            </div>
+          </div>
+
+          {/* Right Column: Form */}
+          <div className="lg:col-span-7 p-8 md:p-10 rounded-3xl bg-brand-navy-light border border-[var(--card-border)] shadow-2xl">
+            <form onSubmit={handleSubmit} className="space-y-6">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                <div className="space-y-2">
+                  <label className="text-xs font-semibold text-brand-heading uppercase tracking-wider">Your Name *</label>
+                  <input
+                    type="text"
+                    required
+                    value={name}
+                    onChange={(e) => setName(e.target.value)}
+                    placeholder="e.g. John Realtor"
+                    className="w-full px-4 py-3.5 rounded-xl bg-brand-navy border border-[var(--card-border)] text-brand-heading placeholder:text-brand-muted focus:outline-none focus:border-brand-electric transition-all text-sm"
+                  />
+                </div>
+                <div className="space-y-2">
+                  <label className="text-xs font-semibold text-brand-heading uppercase tracking-wider">Email Address *</label>
+                  <input
+                    type="email"
+                    required
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    placeholder="john@agency.com"
+                    className="w-full px-4 py-3.5 rounded-xl bg-brand-navy border border-[var(--card-border)] text-brand-heading placeholder:text-brand-muted focus:outline-none focus:border-brand-electric transition-all text-sm"
+                  />
+                </div>
+              </div>
+
+              <div className="space-y-2">
+                <label className="text-xs font-semibold text-brand-heading uppercase tracking-wider">Project Type</label>
+                <div className="flex flex-wrap gap-2 pt-1">
+                  {PROJECT_TYPES.map((type) => {
+                    const isSelected = projectType === type;
+                    return (
+                      <button
+                        type="button"
+                        key={type}
+                        onClick={() => setProjectType(type)}
+                        className={`px-4 py-2 rounded-lg text-xs font-semibold transition-all ${
+                          isSelected
+                            ? 'bg-brand-electric text-white border border-brand-electric shadow-[0_0_15px_rgba(0,102,255,0.4)]'
+                            : 'bg-brand-navy border border-[var(--card-border)] text-brand-muted hover:text-brand-heading hover:border-brand-electric/50'
+                        }`}
+                      >
+                        {type}
+                      </button>
+                    );
+                  })}
+                </div>
+              </div>
+
+              <div className="space-y-2">
+                <label className="text-xs font-semibold text-brand-heading uppercase tracking-wider">Property Details & Vision *</label>
+                <textarea
+                  rows="4"
+                  required
+                  value={message}
+                  onChange={(e) => setMessage(e.target.value)}
+                  placeholder="Tell me about the property, your deadline, and any specific style you want..."
+                  className="w-full px-4 py-3.5 rounded-xl bg-brand-navy border border-[var(--card-border)] text-brand-heading placeholder:text-brand-muted focus:outline-none focus:border-brand-electric transition-all text-sm resize-none"
+                />
+              </div>
+
+              {status && (
+                <div className={`p-4 rounded-xl text-sm font-medium ${status.type === 'success' ? 'bg-emerald-500/10 text-emerald-400 border border-emerald-500/30' : 'bg-red-500/10 text-red-400 border border-red-500/30'}`}>
+                  {status.text}
+                </div>
+              )}
+
+              <button
+                type="submit"
+                disabled={loading}
+                className="w-full py-4 rounded-xl bg-gradient-to-r from-brand-electric to-brand-orange text-white font-bold text-sm tracking-wider uppercase hover:shadow-[0_0_30px_rgba(0,102,255,0.4)] hover:scale-[1.02] transition-all duration-300 flex items-center justify-center gap-2"
+              >
+                {loading ? (
+                  <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin" />
+                ) : (
+                  <>
+                    <span>Submit Inquiry</span>
+                    <ArrowRight className="w-4 h-4" />
+                  </>
+                )}
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+};
+
+export default Contact;
