@@ -142,7 +142,7 @@ const CinematicAudioPlayer = () => {
   }, []);
 
   return (
-    <div className="fixed bottom-4 left-4 sm:bottom-8 sm:left-8 z-[9990]">
+    <div id="cinematic-audio-player" data-cursor="audio" className="fixed bottom-4 left-4 sm:bottom-8 sm:left-8 z-[9990]">
       <div className="flex items-center gap-2.5 p-2 sm:px-3 sm:py-2 rounded-full cinema-glass-heavy shadow-2xl transition-all duration-300 hover:border-brand-electric/50">
         
         {/* Toggle Play / Pause Ambient Audio Button */}

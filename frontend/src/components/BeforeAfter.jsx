@@ -58,6 +58,7 @@ const BeforeAfter = () => {
             onPointerUp={handlePointerUp}
             onPointerCancel={handlePointerUp}
             style={{ touchAction: 'none' }}
+            data-cursor="drag"
             className="relative aspect-video w-full rounded-2xl overflow-hidden shadow-2xl border border-[var(--card-border)] select-none cursor-ew-resize group touch-none"
           >
             {/* 1. Base Layer: Finished Master Grade */}

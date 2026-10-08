@@ -13,7 +13,7 @@ const DEFAULT_CONFIG = {
   viewsGenerated: '100M+',
   clientSatisfaction: '99%',
   email: 'contact@diptovisuals.com',
-  whatsapp: '+8801700000000',
+  whatsapp: '+880 1791-315443',
   bookingUrl: 'https://cal.com',
   instagram: 'https://instagram.com',
   youtube: 'https://youtube.com',

@@ -23,17 +23,15 @@ import Footer from './components/Footer';
 import AllProjects from './pages/AllProjects';
 import LenisScroll from './components/LenisScroll';
 import WhatsAppButton from './components/WhatsAppButton';
-import CinematicAudioPlayer from './components/CinematicAudioPlayer';
 import CustomCursor from './components/CustomCursor';
 import ScrollProgress from './components/ScrollProgress';
+import AdminApp from './admin/AdminApp';
 
 const HomePage = () => (
-  <div className="overflow-x-hidden w-full max-w-[100vw] relative">
+  <div className="portfolio-app overflow-x-hidden w-full max-w-[100vw] relative">
     <CinematicBackground />
     <LenisScroll />
     <WhatsAppButton />
-    <CinematicAudioPlayer />
-    <CustomCursor />
     <ScrollProgress />
     <div className="relative z-10">
       <Navbar />
@@ -55,20 +53,6 @@ const HomePage = () => (
   </div>
 );
 
-const AdminRedirect = () => {
-  useEffect(() => {
-    window.location.href = 'http://localhost:5175';
-  }, []);
-  return (
-    <div className="flex items-center justify-center min-h-screen bg-brand-navy text-white font-jakarta">
-      <div className="text-center space-y-4">
-        <div className="w-10 h-10 border-4 border-brand-electric border-t-transparent rounded-full animate-spin mx-auto"></div>
-        <p className="text-slate-500 text-sm">Redirecting to Admin Panel...</p>
-      </div>
-    </div>
-  );
-};
-
 const App = () => {
   const [isLoading, setIsLoading] = useState(true);
 
@@ -76,6 +60,7 @@ const App = () => {
     <ThemeProvider>
       <SiteConfigProvider>
         <div className="relative bg-brand-navy min-h-screen text-brand-text selection:bg-brand-electric selection:text-white transition-colors duration-500">
+          <CustomCursor />
           <AnimatePresence>
             {isLoading && <CinematicLoader onFinish={() => setIsLoading(false)} />}
           </AnimatePresence>
@@ -85,7 +70,7 @@ const App = () => {
               <Routes>
                 <Route path="/" element={<HomePage />} />
                 <Route path="/all-projects" element={<AllProjects />} />
-                <Route path="/admin" element={<AdminRedirect />} />
+                <Route path="/admin/*" element={<AdminApp />} />
               </Routes>
             </BrowserRouter>
           </Suspense>

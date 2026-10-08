@@ -119,7 +119,7 @@ const AllProjects = () => {
   }, []);
 
   return (
-    <div className="min-h-screen bg-brand-navy py-20 px-4 md:px-8 text-brand-text relative overflow-hidden">
+    <div className="portfolio-app min-h-screen bg-brand-navy py-20 px-4 md:px-8 text-brand-text relative overflow-hidden">
       {/* Ambient background glow */}
       <div className="absolute top-0 left-1/4 w-[600px] h-[600px] rounded-full bg-brand-electric/5 blur-[160px] pointer-events-none" />
       <div className="absolute bottom-0 right-1/4 w-[600px] h-[600px] rounded-full bg-brand-orange/5 blur-[160px] pointer-events-none" />

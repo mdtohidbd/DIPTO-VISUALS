@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Mail, Send, MessageSquare, Clock, Globe, ArrowRight } from 'lucide-react';
+import { useSiteConfig } from '../context/SiteConfigContext';
 import facebook from '../assets/facebook.png';
 import instagram from '../assets/instagram.png';
 import linkedin from '../assets/linkedin.png';
@@ -13,6 +14,7 @@ const PROJECT_TYPES = [
 ];
 
 const Contact = () => {
+  const { config } = useSiteConfig();
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [projectType, setProjectType] = useState(PROJECT_TYPES[0]);
@@ -97,11 +99,18 @@ const Contact = () => {
               <p className="text-xs text-brand-muted uppercase tracking-widest font-semibold">Reach Out Directly</p>
               
               <div className="flex flex-col gap-4">
-                <a href="https://wa.me/+8801700000000" className="flex items-center gap-3 w-fit group">
+                <a 
+                  href={`https://wa.me/${(config?.whatsapp || '+8801791315443').replace(/[^0-9]/g, '')}`} 
+                  target="_blank" 
+                  rel="noreferrer"
+                  className="flex items-center gap-3 w-fit group"
+                >
                   <div className="w-10 h-10 rounded-full bg-[#25D366]/20 border border-[#25D366]/50 flex items-center justify-center group-hover:bg-[#25D366] transition-colors">
                     <MessageSquare className="w-4 h-4 text-[#25D366] group-hover:text-white" />
                   </div>
-                  <span className="text-brand-heading font-medium group-hover:text-[#25D366] transition-colors">+880 17XX XXXXXX (WhatsApp)</span>
+                  <span className="text-brand-heading font-medium group-hover:text-[#25D366] transition-colors">
+                    {config?.whatsapp || '+880 1791-315443'} (WhatsApp)
+                  </span>
                 </a>
                 
                 <a href="mailto:hello@diptovisuals.com" className="flex items-center gap-3 w-fit group">

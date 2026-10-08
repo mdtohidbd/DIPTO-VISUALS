@@ -59,6 +59,7 @@ const Cards = ({ item, onSelect }) => {
       className="w-full h-full cursor-pointer group"
     >
       <div
+        data-cursor="play"
         onClick={() => onSelect?.(item)}
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}

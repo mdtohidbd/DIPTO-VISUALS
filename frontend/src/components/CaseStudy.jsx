@@ -30,6 +30,8 @@ const CaseStudy = () => {
             whileInView="visible"
             viewport={{ once: true }}
             variants={fadeUp}
+            data-cursor="play"
+            data-cursor-text="CASE STUDY"
             className="relative rounded-2xl overflow-hidden aspect-video border border-[var(--card-border)] shadow-[0_0_40px_rgba(0,102,255,0.15)] group cursor-pointer"
           >
             <div className="absolute inset-0 bg-brand-navy/40 group-hover:bg-brand-navy/20 transition-colors z-10 flex items-center justify-center">
