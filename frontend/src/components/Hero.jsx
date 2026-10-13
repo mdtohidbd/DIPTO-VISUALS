@@ -37,7 +37,7 @@ const Hero = () => {
             >
               <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-brand-electric/10 border border-brand-electric/20 text-brand-electric font-semibold text-xs tracking-widest uppercase shadow-sm">
                 <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
-                {config.heroBadge || 'Real Estate Video Editor'}
+                {config.heroBadge || 'Elite Real Estate Post-Production'}
               </div>
             </motion.div>
 
@@ -48,9 +48,9 @@ const Hero = () => {
               custom={0.2}
               className="text-4xl sm:text-6xl lg:text-7xl font-black tracking-tight leading-[1.1] text-brand-heading"
             >
-              {config.heroHeadlineStart || 'Turn Raw Property Footage Into'} <br />
+              {config.heroHeadlineStart || 'Transforming Raw Footage Into'} <br />
               <span className="cinema-gradient-text bg-gradient-to-r from-brand-electric to-brand-orange bg-clip-text text-transparent">
-                {config.heroHeadlineGradient || 'Premium Visual Stories'}
+                {config.heroHeadlineGradient || 'Multimillion-Dollar Cinema'}
               </span>
             </motion.h1>
 
@@ -61,7 +61,7 @@ const Hero = () => {
               custom={0.3}
               className="text-brand-text text-base sm:text-lg leading-relaxed max-w-xl font-medium"
             >
-              {config.heroDescription || 'High-converting property walkthroughs, drone edits, and viral reels that captivate high-ticket buyers and boost conversions.'}
+              {config.heroDescription || 'High-converting architectural walkthroughs, cinematic drone storytelling, and viral vertical reels engineered to captivate luxury buyers and sell listings faster.'}
             </motion.p>
 
             <motion.div
@@ -72,18 +72,18 @@ const Hero = () => {
               className="flex flex-wrap items-center gap-4 pt-2"
             >
               <a
-                href="#projects"
+                href={config.heroCta1Link || '#projects'}
                 className="group relative px-8 py-4 bg-brand-electric text-white font-bold rounded-2xl shadow-[0_0_25px_rgba(0,102,255,0.4)] hover:shadow-[0_0_35px_rgba(0,102,255,0.7)] hover:-translate-y-0.5 transition-all duration-300 flex items-center gap-2.5"
               >
-                <span>VIEW MY WORK</span>
+                <span>{config.heroCta1Text || 'EXPLORE SHOWREEL'}</span>
                 <Play className="w-4 h-4 fill-white text-white" />
               </a>
 
               <a
-                href="#contact"
+                href={config.heroCta2Link || '#contact'}
                 className="group px-8 py-4 bg-white/5 border border-[var(--card-border)] text-brand-heading font-bold rounded-2xl hover:bg-white/10 hover:border-brand-electric/40 transition-all duration-300 flex items-center gap-2.5"
               >
-                <span>GET A QUOTE</span>
+                <span>{config.heroCta2Text || 'GET A FREE QUOTE'}</span>
                 <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
               </a>
             </motion.div>
@@ -96,7 +96,9 @@ const Hero = () => {
               custom={0.5}
               className="pt-6 flex flex-col gap-3"
             >
-              <p className="text-xs text-brand-muted uppercase tracking-widest font-semibold">Crafted With Industry Standard Tools</p>
+              <p className="text-xs text-brand-muted uppercase tracking-widest font-semibold">
+                {config.toolsCaption || 'Engineered With Industry-Standard Software'}
+              </p>
               <div className="flex items-center gap-3 sm:gap-4 flex-wrap">
                 <div className="flex items-center gap-2 px-3 py-1.5 rounded-xl bg-brand-navy-light border border-[var(--card-border)] text-xs font-bold text-brand-heading">
                   <span className="w-5 h-5 rounded bg-[#9999ff] text-[#00005c] flex items-center justify-center text-[10px] font-black">Pr</span>
@@ -130,7 +132,11 @@ const Hero = () => {
               
               {/* Portrait Image */}
               <img 
-                src={profileImg} 
+                src={
+                  config.profileImage 
+                    ? (config.profileImage.startsWith('/uploads') ? `http://localhost:5000${config.profileImage}` : config.profileImage)
+                    : profileImg
+                } 
                 alt={config.ownerName || "Md Tohidul Islam"} 
                 className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-700 ease-out"
               />
@@ -142,7 +148,7 @@ const Hero = () => {
               <div className="absolute top-4 right-4 z-20">
                 <div className="px-3 py-1.5 bg-black/60 backdrop-blur-md rounded-full border border-white/20 shadow-lg flex items-center gap-2 keep-text-white">
                   <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
-                  <span className="text-[11px] font-bold text-white tracking-wide">Available for Projects</span>
+                  <span className="text-[11px] font-bold text-white tracking-wide">{config.statusBadgeText || 'Available for New Projects'}</span>
                 </div>
               </div>
 
@@ -150,7 +156,7 @@ const Hero = () => {
               <div className="absolute top-4 left-4 z-20">
                 <div className="px-3 py-1.5 bg-black/60 backdrop-blur-md rounded-full border border-white/20 shadow-lg flex items-center gap-1.5 keep-text-white">
                   <Star className="w-3.5 h-3.5 fill-amber-400 text-amber-400" />
-                  <span className="text-[11px] font-bold text-white tracking-wide">Top Rated Editor</span>
+                  <span className="text-[11px] font-bold text-white tracking-wide">{config.experienceBadgeText || 'Top 1% Real Estate Editor'}</span>
                 </div>
               </div>
 
@@ -163,7 +169,7 @@ const Hero = () => {
                       <CheckCircle2 className="w-4 h-4 text-brand-electric flex-shrink-0" />
                     </h3>
                     <p className="text-brand-orange text-xs font-semibold truncate">
-                      {config.tagline || 'Real Estate & Cinematic Video Editor'}
+                      {config.tagline || 'Luxury Real Estate & Cinematic Editor'}
                     </p>
                   </div>
 

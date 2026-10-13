@@ -5,12 +5,14 @@ import { useSiteConfig } from '../context/SiteConfigContext';
 const Stats = () => {
   const { config } = useSiteConfig();
 
-  const statsList = [
-    { value: config.videosEdited || '500+', label: 'Videos Edited' },
-    { value: config.viewsGenerated || '100M+', label: 'Views Generated' },
-    { value: config.experienceYears || '5+', label: 'Years Experience' },
-    { value: config.clientSatisfaction || '99%', label: 'Client Satisfaction' }
-  ];
+  const statsList = Array.isArray(config.stats) && config.stats.length > 0
+    ? config.stats
+    : [
+        { value: config.videosEdited || '500+', label: 'Videos Edited' },
+        { value: config.viewsGenerated || '100M+', label: 'Views Generated' },
+        { value: config.experienceYears || '5+', label: 'Years Experience' },
+        { value: config.clientSatisfaction || '99%', label: 'Client Satisfaction' }
+      ];
 
   return (
     <section className="py-12 bg-brand-navy border-t border-[var(--card-border)] relative z-20">

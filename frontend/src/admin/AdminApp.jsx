@@ -9,6 +9,7 @@ import ManageClientWorks from './pages/ManageClientWorks';
 import ManageTestimonials from './pages/ManageTestimonials';
 import ManageMessages from './pages/ManageMessages';
 import ManageTheme from './pages/ManageTheme';
+import ManageSections from './pages/ManageSections';
 import Settings from './pages/Settings';
 
 const LoadingScreen = () => (
@@ -186,6 +187,19 @@ const AdminApp = () => {
             isAuthenticated ? (
               <AdminLayout onLogout={handleLogout} username={username}>
                 <ManageTheme />
+              </AdminLayout>
+            ) : (
+              <Navigate to="/admin/login" replace />
+            )
+          }
+        />
+
+        <Route
+          path="sections"
+          element={
+            isAuthenticated ? (
+              <AdminLayout onLogout={handleLogout} username={username}>
+                <ManageSections />
               </AdminLayout>
             ) : (
               <Navigate to="/admin/login" replace />

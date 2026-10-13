@@ -6,11 +6,11 @@ import instagram from '../assets/instagram.png';
 import linkedin from '../assets/linkedin.png';
 
 const PROJECT_TYPES = [
-  'Property Walkthrough',
+  'Luxury Walkthrough (4K)',
   'Listing Promo Ad',
-  'Agent Branding Reel',
-  'Drone/Aerial Edit',
-  'Monthly Retainer',
+  'Viral 9:16 Social Reel',
+  'Drone / Aerial Cinematics',
+  'Monthly Agency Retainer',
 ];
 
 const Contact = () => {
@@ -70,27 +70,27 @@ const Contact = () => {
           <div className="lg:col-span-5 space-y-8">
             <div className="space-y-4">
               <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-brand-electric/10 border border-brand-electric/20 text-brand-electric text-xs font-semibold tracking-widest uppercase">
-                <MessageSquare className="w-3.5 h-3.5" /> Book an Edit
+                <MessageSquare className="w-3.5 h-3.5" /> {config.contactBadge || 'Start Your Project'}
               </div>
               <h2 className="text-4xl md:text-5xl font-black text-brand-heading tracking-tight leading-tight">
-                READY TO MAKE YOUR LISTINGS STAND OUT? <br />
+                {config.contactTitle || 'ELEVATE YOUR LISTINGS TO'} <br />
                 <span className="bg-gradient-to-r from-brand-electric to-brand-orange bg-clip-text text-transparent">
-                  LET’S WORK TOGETHER
+                  {config.contactGradient || 'CINEMATIC HEIGHTS'}
                 </span>
               </h2>
               <p className="text-brand-muted text-base leading-relaxed">
-                Whether you have a multi-million dollar estate to showcase or need a batch of agent branding reels, I'm ready to bring your vision to life.
+                {config.contactSubtitle || "Whether you're marketing an ultra-luxury estate, launching an architectural development, or scaling weekly reels for your brokerage, let's create visuals that captivate buyers and sell listings faster."}
               </p>
             </div>
 
             <div className="space-y-4 pt-4">
               <div className="flex items-center gap-3 text-sm text-brand-text">
                 <Clock className="w-5 h-5 text-brand-orange flex-shrink-0" />
-                <span>Quick turnaround available for urgent listings.</span>
+                <span>{config.contactFeature1 || 'Guaranteed 24 to 48-hour delivery available for priority listings.'}</span>
               </div>
               <div className="flex items-center gap-3 text-sm text-brand-text">
                 <Globe className="w-5 h-5 text-brand-electric flex-shrink-0" />
-                <span>Working remotely with agencies worldwide.</span>
+                <span>{config.contactFeature2 || 'Seamless remote collaboration with agencies & brokers worldwide.'}</span>
               </div>
             </div>
 

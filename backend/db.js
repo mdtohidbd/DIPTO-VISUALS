@@ -59,11 +59,11 @@ const themeSchema = new mongoose.Schema({
 const siteConfigSchema = new mongoose.Schema({
   brandName: { type: String, default: 'DIPTO VISUALS' },
   ownerName: { type: String, default: 'Md Tohidul Islam' },
-  tagline: { type: String, default: 'Real Estate Video Editor' },
-  heroBadge: { type: String, default: 'Real Estate Video Editor' },
-  heroHeadlineStart: { type: String, default: 'Turn Raw Property Footage Into' },
-  heroHeadlineGradient: { type: String, default: 'Premium Visual Stories' },
-  heroDescription: { type: String, default: 'High-converting property walkthroughs, drone edits, and viral reels that captivate high-ticket buyers.' },
+  tagline: { type: String, default: 'Luxury Real Estate & Cinematic Video Editor' },
+  heroBadge: { type: String, default: 'Elite Real Estate Post-Production' },
+  heroHeadlineStart: { type: String, default: 'Transforming Raw Footage Into' },
+  heroHeadlineGradient: { type: String, default: 'Multimillion-Dollar Cinema' },
+  heroDescription: { type: String, default: 'High-converting architectural walkthroughs, cinematic drone storytelling, and viral vertical reels engineered to captivate luxury buyers and sell listings faster.' },
   experienceYears: { type: String, default: '5+' },
   videosEdited: { type: String, default: '500+' },
   viewsGenerated: { type: String, default: '100M+' },
@@ -75,7 +75,7 @@ const siteConfigSchema = new mongoose.Schema({
   youtube: { type: String, default: 'https://youtube.com' },
   linkedin: { type: String, default: 'https://linkedin.com' },
   updatedAt: { type: Date, default: Date.now }
-});
+}, { strict: false });
 
 // Models
 const AdminModel = mongoose.model('Admin', adminSchema);
@@ -578,28 +578,14 @@ class MongoDatabase {
   async saveSiteConfig(configData) {
     let config = await SiteConfigModel.findOne();
     const payload = {
-      brandName: configData.brandName || 'DIPTO VISUALS',
-      ownerName: configData.ownerName || 'Md Tohidul Islam',
-      tagline: configData.tagline || 'Real Estate Video Editor',
-      heroBadge: configData.heroBadge || 'Real Estate Video Editor',
-      heroHeadlineStart: configData.heroHeadlineStart || 'Turn Raw Property Footage Into',
-      heroHeadlineGradient: configData.heroHeadlineGradient || 'Premium Visual Stories',
-      heroDescription: configData.heroDescription || 'High-converting property walkthroughs, drone edits, and viral reels that captivate high-ticket buyers.',
-      experienceYears: configData.experienceYears || '5+',
-      videosEdited: configData.videosEdited || '500+',
-      viewsGenerated: configData.viewsGenerated || '100M+',
-      clientSatisfaction: configData.clientSatisfaction || '99%',
-      email: configData.email || 'contact@diptovisuals.com',
-      whatsapp: configData.whatsapp || '+880 1791-315443',
-      bookingUrl: configData.bookingUrl || 'https://cal.com',
-      instagram: configData.instagram || 'https://instagram.com',
-      youtube: configData.youtube || 'https://youtube.com',
-      linkedin: configData.linkedin || 'https://linkedin.com',
+      ...configData,
       updatedAt: new Date()
     };
+    delete payload._id;
+    delete payload.id;
 
     if (config) {
-      Object.assign(config, payload);
+      config.set(payload);
       await config.save();
       const obj = config.toObject();
       return { ...obj, id: obj._id.toString() };

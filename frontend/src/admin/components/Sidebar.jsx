@@ -9,12 +9,14 @@ import {
   LogOut,
   UserCheck,
   Palette,
-  ExternalLink
+  ExternalLink,
+  Sliders
 } from 'lucide-react';
 
 const Sidebar = ({ onLogout, username }) => {
   const menuItems = [
     { name: 'Dashboard', path: '/admin', icon: LayoutDashboard, end: true },
+    { name: 'Landing Modules', path: '/admin/sections', icon: Sliders },
     { name: 'Projects', path: '/admin/projects', icon: Layers },
     { name: 'Client Works', path: '/admin/client-works', icon: Briefcase },
     { name: 'Testimonials', path: '/admin/testimonials', icon: MessageSquare },

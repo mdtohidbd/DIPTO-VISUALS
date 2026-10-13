@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import { api } from '../utils/api';
 import { 
   Key, 
@@ -14,7 +15,8 @@ import {
   Save, 
   RefreshCw,
   Sliders,
-  CheckCircle2
+  CheckCircle2,
+  ArrowRight
 } from 'lucide-react';
 
 const Settings = () => {
@@ -170,6 +172,26 @@ const Settings = () => {
       {/* TAB 1: Site Content Customizer */}
       {activeTab === 'content' && (
         <form onSubmit={handleSaveConfig} className="space-y-6">
+          {/* Quick link banner to full sections editor */}
+          <div className="p-5 rounded-2xl bg-gradient-to-r from-red-950/40 via-slate-900 to-teal-950/40 border border-teal-500/30 flex flex-col sm:flex-row sm:items-center justify-between gap-4 shadow-xl">
+            <div>
+              <div className="flex items-center gap-2 mb-1">
+                <span className="px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider bg-teal-500/20 text-teal-300">New Feature</span>
+                <span className="text-xs font-semibold text-slate-200">Full Landing Page Modules Editor</span>
+              </div>
+              <p className="text-xs text-slate-400">
+                Want to manage Services, Case Study, Before/After Slider, 4-Step Pipeline, Pricing Tiers, FAQs, and Section Toggles?
+              </p>
+            </div>
+            <Link
+              to="/admin/sections"
+              className="px-4 py-2 rounded-xl bg-teal-500/20 hover:bg-teal-500/30 text-teal-300 hover:text-white border border-teal-500/40 text-xs font-bold flex items-center gap-2 transition-all self-start sm:self-auto flex-shrink-0"
+            >
+              <span>Open Modules Builder</span>
+              <ArrowRight className="w-3.5 h-3.5" />
+            </Link>
+          </div>
+
           {configSuccess && (
             <div className="p-4 bg-teal-500/10 border border-teal-500/30 text-teal-300 text-sm rounded-2xl flex items-center gap-3 animate-fadeIn">
               <CheckCircle2 className="w-5 h-5 text-teal-400 flex-shrink-0" />

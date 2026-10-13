@@ -78,16 +78,16 @@ const Testimonials = () => {
         {/* Section Heading */}
         <div className="text-center mb-8 md:mb-12">
           <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-brand-orange/10 border border-brand-orange/20 text-brand-orange text-xs font-semibold tracking-widest uppercase mb-4">
-            <Award className="w-3.5 h-3.5" /> Client Praise
+            <Award className="w-3.5 h-3.5" /> Client Praise & Verified Results
           </div>
           <h2 className="text-3xl md:text-5xl font-black text-brand-heading tracking-tight mb-4">
-            Trusted by Top Producing{' '}
+            Trusted by Top-Producing{' '}
             <span className="bg-gradient-to-r from-brand-electric to-brand-orange bg-clip-text text-transparent">
-              Agents
+              Agents & Brokers
             </span>
           </h2>
           <p className="text-brand-muted max-w-xl mx-auto text-base">
-            Don't just take my word for it. Here is what leading real estate professionals have to say about the work.
+            Discover how cinematic post-production consistency helps top agents dominate market mindshare and close high-ticket transactions.
           </p>
         </div>
 

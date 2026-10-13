@@ -2,7 +2,7 @@ import React, { useState, Suspense, useEffect } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { AnimatePresence } from 'framer-motion';
 import { ThemeProvider } from './context/ThemeContext';
-import { SiteConfigProvider } from './context/SiteConfigContext';
+import { SiteConfigProvider, useSiteConfig } from './context/SiteConfigContext';
 import CinematicBackground from './components/CinematicBackground';
 import CinematicLoader from './components/CinematicLoader';
 import Navbar from './components/Navbar';
@@ -27,31 +27,36 @@ import CustomCursor from './components/CustomCursor';
 import ScrollProgress from './components/ScrollProgress';
 import AdminApp from './admin/AdminApp';
 
-const HomePage = () => (
-  <div className="portfolio-app overflow-x-hidden w-full max-w-[100vw] relative">
-    <CinematicBackground />
-    <LenisScroll />
-    <WhatsAppButton />
-    <ScrollProgress />
-    <div className="relative z-10">
-      <Navbar />
-      <Hero />
-      <Stats />
-      <LogoStrip />
-      <CaseStudy />
-      <Projects />
-      <BeforeAfter />
-      <Services />
-      <Process />
-      <Pricing />
-      <WhyChooseUs />
-      <Testimonials />
-      <FAQ />
-      <Contact />
-      <Footer />
+const HomePage = () => {
+  const { config } = useSiteConfig();
+  const vis = config?.sectionVisibility || {};
+
+  return (
+    <div className="portfolio-app overflow-x-hidden w-full max-w-[100vw] relative">
+      <CinematicBackground />
+      <LenisScroll />
+      <WhatsAppButton />
+      <ScrollProgress />
+      <div className="relative z-10">
+        <Navbar />
+        {vis.hero !== false && <Hero />}
+        {vis.stats !== false && <Stats />}
+        {vis.logoStrip !== false && <LogoStrip />}
+        {vis.caseStudy !== false && <CaseStudy />}
+        {vis.projects !== false && <Projects />}
+        {vis.beforeAfter !== false && <BeforeAfter />}
+        {vis.services !== false && <Services />}
+        {vis.process !== false && <Process />}
+        {vis.pricing !== false && <Pricing />}
+        {vis.whyUs !== false && <WhyChooseUs />}
+        {vis.testimonials !== false && <Testimonials />}
+        {vis.faq !== false && <FAQ />}
+        {vis.contact !== false && <Contact />}
+        <Footer />
+      </div>
     </div>
-  </div>
-);
+  );
+};
 
 const App = () => {
   const [isLoading, setIsLoading] = useState(true);

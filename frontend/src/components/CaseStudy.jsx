@@ -1,12 +1,24 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { TrendingUp, CheckCircle, Video } from 'lucide-react';
+import { useSiteConfig, DEFAULT_CASE_STUDY } from '../context/SiteConfigContext';
 
 const CaseStudy = () => {
+  const { config } = useSiteConfig();
+  const cs = config.caseStudy || DEFAULT_CASE_STUDY;
+
   const fadeUp = {
     hidden: { opacity: 0, y: 20 },
     visible: { opacity: 1, y: 0, transition: { duration: 0.6 } }
   };
+
+  const imageSrc = cs.image && cs.image.startsWith('/uploads')
+    ? `http://localhost:5000${cs.image}`
+    : (cs.image || DEFAULT_CASE_STUDY.image);
+
+  const resultsList = Array.isArray(cs.results) && cs.results.length > 0
+    ? cs.results
+    : DEFAULT_CASE_STUDY.results;
 
   return (
     <section className="py-20 md:py-28 bg-brand-navy-light relative overflow-hidden border-t border-[var(--card-border)]">
@@ -15,11 +27,14 @@ const CaseStudy = () => {
 
       <div className="max-w-7xl mx-auto px-5 relative z-10">
         <div className="text-center mb-16">
+          <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-brand-orange/10 border border-brand-orange/20 text-brand-orange text-xs font-semibold tracking-widest uppercase mb-4">
+            {cs.badge || 'Proven Market Impact'}
+          </div>
           <h2 className="text-3xl md:text-5xl font-black text-brand-heading mb-4">
-            Case Study: <span className="bg-gradient-to-r from-brand-electric to-brand-orange bg-clip-text text-transparent">Luxury Villa</span>
+            {cs.title || 'Case Study: $4.8M Architectural Villa'}
           </h2>
-          <p className="text-brand-muted max-w-2xl mx-auto">
-            How cinematic editing turned a stagnant $2.5M listing into a bidding war within 14 days.
+          <p className="text-brand-muted max-w-2xl mx-auto text-base">
+            {cs.subtitle || 'How transformative cinematic pacing and DaVinci color science turned a dormant listing into a bidding frenzy within 14 days.'}
           </p>
         </div>
 
@@ -39,10 +54,10 @@ const CaseStudy = () => {
                 <Video className="w-6 h-6 text-white" />
               </div>
             </div>
-            {/* Placeholder image for case study */}
+            {/* Image for case study */}
             <img 
-              src="https://images.unsplash.com/photo-1613977257363-707ba9348227?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80" 
-              alt="Luxury Villa Listing"
+              src={imageSrc} 
+              alt={cs.title || "Luxury Villa Listing"}
               className="w-full h-full object-cover"
             />
           </motion.div>
@@ -57,9 +72,11 @@ const CaseStudy = () => {
               className="relative pl-6 border-l-2 border-red-500/50"
             >
               <div className="absolute -left-[9px] top-0 w-4 h-4 rounded-full bg-brand-navy border-2 border-red-500" />
-              <h3 className="text-xl font-bold text-brand-heading mb-2 uppercase tracking-wide">The Problem</h3>
-              <p className="text-brand-muted">
-                The agency had standard raw drone and interior footage, but it lacked emotion. The property had been on the market for 6 months with minimal inquiries because the visuals felt flat and generic.
+              <h3 className="text-xl font-bold text-brand-heading mb-2 uppercase tracking-wide">
+                {cs.challengeTitle || 'The Challenge'}
+              </h3>
+              <p className="text-brand-muted leading-relaxed">
+                {cs.challengeDesc || DEFAULT_CASE_STUDY.challengeDesc}
               </p>
             </motion.div>
 
@@ -71,9 +88,11 @@ const CaseStudy = () => {
               className="relative pl-6 border-l-2 border-brand-electric/50"
             >
               <div className="absolute -left-[9px] top-0 w-4 h-4 rounded-full bg-brand-navy border-2 border-brand-electric" />
-              <h3 className="text-xl font-bold text-brand-heading mb-2 uppercase tracking-wide">The Solution</h3>
-              <p className="text-brand-muted">
-                I re-edited the timeline with a dynamic pacing strategy, added speed ramps to highlight architectural flow, implemented premium color grading to make the lighting pop, and layered a cinematic soundscape (birds, wind, subtle whooshes).
+              <h3 className="text-xl font-bold text-brand-heading mb-2 uppercase tracking-wide">
+                {cs.solutionTitle || 'The Strategic Edit'}
+              </h3>
+              <p className="text-brand-muted leading-relaxed">
+                {cs.solutionDesc || DEFAULT_CASE_STUDY.solutionDesc}
               </p>
             </motion.div>
 
@@ -85,20 +104,19 @@ const CaseStudy = () => {
               className="relative pl-6 border-l-2 border-emerald-500/50"
             >
               <div className="absolute -left-[9px] top-0 w-4 h-4 rounded-full bg-brand-navy border-2 border-emerald-500" />
-              <h3 className="text-xl font-bold text-brand-heading mb-2 uppercase tracking-wide">The Result</h3>
-              <ul className="space-y-2 text-brand-text">
-                <li className="flex items-center gap-2">
-                  <TrendingUp className="w-4 h-4 text-emerald-400 flex-shrink-0" /> 
-                  <span><strong className="font-bold text-brand-heading">45,000+ Views</strong> across IG & YouTube in 48 hours.</span>
-                </li>
-                <li className="flex items-center gap-2">
-                  <CheckCircle className="w-4 h-4 text-emerald-400 flex-shrink-0" /> 
-                  <span><strong className="font-bold text-brand-heading">12 Private Showings</strong> booked directly from the video.</span>
-                </li>
-                <li className="flex items-center gap-2">
-                  <CheckCircle className="w-4 h-4 text-emerald-400 flex-shrink-0" /> 
-                  <span>Sold <strong className="font-bold text-brand-heading">above asking price</strong> in 14 days.</span>
-                </li>
+              <h3 className="text-xl font-bold text-brand-heading mb-2 uppercase tracking-wide">
+                {cs.resultsTitle || 'The Results'}
+              </h3>
+              <ul className="space-y-2.5 text-brand-text">
+                {resultsList.map((resItem, rIdx) => (
+                  <li key={rIdx} className="flex items-center gap-2.5">
+                    <TrendingUp className="w-4 h-4 text-emerald-400 flex-shrink-0" /> 
+                    <span>
+                      <strong className="font-bold text-brand-heading">{resItem.metric}</strong>{' '}
+                      {resItem.label}
+                    </span>
+                  </li>
+                ))}
               </ul>
             </motion.div>
           </div>

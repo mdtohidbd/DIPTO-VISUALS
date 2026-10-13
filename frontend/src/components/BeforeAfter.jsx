@@ -1,10 +1,22 @@
 import React, { useState, useRef, useCallback } from 'react';
 import { Sliders, Sun } from 'lucide-react';
+import { useSiteConfig, DEFAULT_BEFORE_AFTER } from '../context/SiteConfigContext';
 
 const BeforeAfter = () => {
+  const { config } = useSiteConfig();
+  const ba = config.beforeAfter || DEFAULT_BEFORE_AFTER;
+
   const [sliderPos, setSliderPos] = useState(50);
   const [isDragging, setIsDragging] = useState(false);
   const containerRef = useRef(null);
+
+  const rawImgSrc = ba.rawImage && ba.rawImage.startsWith('/uploads')
+    ? `http://localhost:5000${ba.rawImage}`
+    : (ba.rawImage || DEFAULT_BEFORE_AFTER.rawImage);
+
+  const gradedImgSrc = ba.gradedImage && ba.gradedImage.startsWith('/uploads')
+    ? `http://localhost:5000${ba.gradedImage}`
+    : (ba.gradedImage || DEFAULT_BEFORE_AFTER.gradedImage);
 
   const updatePosition = useCallback((clientX) => {
     if (!containerRef.current) return;
@@ -39,13 +51,13 @@ const BeforeAfter = () => {
       <div className="max-w-7xl mx-auto px-5 relative z-10">
         <div className="text-center mb-12">
           <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-brand-orange/10 border border-brand-orange/20 text-brand-orange text-xs font-semibold tracking-widest uppercase mb-4">
-            <Sun className="w-3.5 h-3.5" /> Professional Color Grading
+            <Sun className="w-3.5 h-3.5" /> {ba.badge || 'DaVinci Color Science'}
           </div>
           <h2 className="text-3xl md:text-5xl font-black text-brand-heading mb-4">
-            From Dull to <span className="bg-gradient-to-r from-brand-electric to-brand-orange bg-clip-text text-transparent">Desirable</span>
+            {ba.title || 'From Flat LOG Footage to Luminous Luxury Cinema'}
           </h2>
-          <p className="text-brand-muted max-w-2xl mx-auto">
-            Raw camera footage looks flat and grey. We color grade every clip to ensure skies are blue, grass is green, and interiors feel warm, inviting, and premium.
+          <p className="text-brand-muted max-w-2xl mx-auto text-base">
+            {ba.subtitle || 'Raw camera profiles look dull and washed-out. We sculpt natural dynamic range, balance sky luminance, and infuse inviting warmth into every interior space.'}
           </p>
         </div>
 
@@ -64,7 +76,7 @@ const BeforeAfter = () => {
             {/* 1. Base Layer: Finished Master Grade */}
             <div className="absolute inset-0 w-full h-full bg-black">
               <img
-                src="https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80"
+                src={gradedImgSrc}
                 alt="Finished Color Grade"
                 draggable={false}
                 className="w-full h-full object-cover filter contrast-[1.1] saturate-[1.2] brightness-[1.05] pointer-events-none select-none"
@@ -77,7 +89,7 @@ const BeforeAfter = () => {
               style={{ clipPath: `inset(0 ${100 - sliderPos}% 0 0)` }}
             >
               <img
-                src="https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80"
+                src={rawImgSrc}
                 alt="Raw Camera Footage"
                 draggable={false}
                 className="w-full h-full object-cover filter contrast-[0.7] saturate-[0.3] brightness-[1.1] pointer-events-none select-none"
@@ -98,7 +110,7 @@ const BeforeAfter = () => {
             {/* Left Top Badge: RAW */}
             <div className="absolute top-4 left-4 z-10 pointer-events-none keep-text-white">
               <div className="px-3.5 py-1.5 rounded-full bg-black/75 backdrop-blur-md border border-white/20 text-white text-xs font-bold shadow-xl">
-                RAW FOOTAGE
+                {ba.rawLabel || 'FLAT RAW PROFILE'}
               </div>
             </div>
 
@@ -106,7 +118,7 @@ const BeforeAfter = () => {
             <div className="absolute top-4 right-4 z-10 pointer-events-none keep-text-white">
               <div className="px-3.5 py-1.5 rounded-full bg-brand-electric/90 backdrop-blur-md border border-brand-electric/50 text-white text-xs font-bold shadow-xl flex items-center gap-2">
                 <span className="w-2 h-2 rounded-full bg-white animate-pulse" />
-                FINAL GRADE
+                {ba.gradedLabel || 'HOLLYWOOD MASTER GRADE'}
               </div>
             </div>
           </div>
