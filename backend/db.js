@@ -68,12 +68,23 @@ const siteConfigSchema = new mongoose.Schema({
   videosEdited: { type: String, default: '500+' },
   viewsGenerated: { type: String, default: '100M+' },
   clientSatisfaction: { type: String, default: '99%' },
-  email: { type: String, default: 'contact@diptovisuals.com' },
-  whatsapp: { type: String, default: '+880 1791-315443' },
+  email: { type: String, default: 'diptoalmamun34@gmail.com' },
+  whatsapp: { type: String, default: '01791315443' },
   bookingUrl: { type: String, default: 'https://cal.com' },
-  instagram: { type: String, default: 'https://instagram.com' },
-  youtube: { type: String, default: 'https://youtube.com' },
+  instagram: { type: String, default: 'https://instagram.com/diptoalmamun' },
+  youtube: { type: String, default: 'https://youtube.com/@diptovideoediting' },
+  facebook: { type: String, default: 'https://www.facebook.com/profile.php?id=61591489202271' },
+  fiverr: { type: String, default: 'https://www.fiverr.com' },
+  upwork: { type: String, default: 'https://www.upwork.com' },
   linkedin: { type: String, default: 'https://linkedin.com' },
+  whyChooseUsBadge: { type: String, default: 'The Dipto Visuals Advantage' },
+  whyChooseUsTitle: { type: String, default: 'Visual Storytelling That' },
+  whyChooseUsGradient: { type: String, default: 'Commands High Valuation' },
+  whyChooseUsSubtitle: { type: String, default: "Exceptional real estate video isn't merely about documenting square footage—it's about orchestrating desire. We blend Hollywood-grade color mapping, psychological cut pacing, and rich soundscapes so buyers fall in love before stepping through the door." },
+  whyChooseUsImage: { type: String, default: 'https://images.unsplash.com/photo-1512918728675-ed5a9ecdebfd?auto=format&fit=crop&w=1200&q=80' },
+  whyChooseUsVideoUrl: { type: String, default: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4' },
+  whyChooseUsReasons: { type: Array, default: [] },
+  whyChooseUsItems: { type: Array, default: [] },
   updatedAt: { type: Date, default: Date.now }
 }, { strict: false });
 
@@ -306,7 +317,7 @@ class MongoDatabase {
       title: item.title,
       desc: item.desc,
       image: item.image,
-      videoUrl: item.videoUrl || '',
+      videoUrl: (item.videoUrl && item.videoUrl.includes('commondatastorage.googleapis.com')) ? '/uploads/sample-video-1.mp4' : (item.videoUrl || ''),
       category: item.category || 'YouTube Long-form',
       aspectRatio: item.aspectRatio || '16:9',
       duration: item.duration || '3:00',
@@ -547,7 +558,7 @@ class MongoDatabase {
 
   // Site Profile & Content Configuration
   async getSiteConfig() {
-    let config = await SiteConfigModel.findOne().lean();
+    let config = await SiteConfigModel.findOne();
     if (!config) {
       const defaultDoc = new SiteConfigModel({
         brandName: 'DIPTO VISUALS',
@@ -561,18 +572,250 @@ class MongoDatabase {
         videosEdited: '500+',
         viewsGenerated: '100M+',
         clientSatisfaction: '99%',
-        email: 'contact@diptovisuals.com',
-        whatsapp: '+880 1791-315443',
+        email: 'diptoalmamun34@gmail.com',
+        whatsapp: '01791315443',
         bookingUrl: 'https://cal.com',
-        instagram: 'https://instagram.com',
-        youtube: 'https://youtube.com',
-        linkedin: 'https://linkedin.com'
+        instagram: 'https://instagram.com/diptoalmamun',
+        youtube: 'https://youtube.com/@diptovideoediting',
+        facebook: 'https://www.facebook.com/profile.php?id=61591489202271',
+        fiverr: 'https://www.fiverr.com',
+        upwork: 'https://www.upwork.com',
+        linkedin: 'https://linkedin.com',
+        whyChooseUsBadge: 'The Dipto Visuals Advantage',
+        whyChooseUsTitle: 'Visual Storytelling That',
+        whyChooseUsGradient: 'Commands High Valuation',
+        whyChooseUsSubtitle: "Exceptional real estate video isn't merely about documenting square footage—it's about orchestrating desire. We blend Hollywood-grade color mapping, psychological cut pacing, and rich soundscapes so buyers fall in love before stepping through the door.",
+        whyChooseUsImage: 'https://images.unsplash.com/photo-1512918728675-ed5a9ecdebfd?auto=format&fit=crop&w=1200&q=80',
+        whyChooseUsVideoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4',
+        whyChooseUsReasons: [
+          "Hollywood DaVinci Color Science",
+          "Rhythmic, Beat-Matched Pacing",
+          "48-Hour Rapid Delivery Guarantee",
+          "Full Commercial Music Licensing",
+          "Frictionless Frame.io Reviews",
+          "Multi-Platform 16:9 & 9:16 Exports"
+        ],
+        whyChooseUsItems: [
+          {
+            id: 'color-science',
+            title: 'Hollywood DaVinci Color Science',
+            subtitle: 'ACES & Kodak 2383 35mm film emulation with balanced natural skin tones.',
+            tag: 'Color Science',
+            icon: 'Palette',
+            badgeText: 'Rec.709 vs Kodak 2383 Cinema LUT',
+            stat: '32-Bit Float',
+            statLabel: 'Wide Color Gamut',
+            videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4',
+            image: 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1200&q=80'
+          },
+          {
+            id: 'beat-pacing',
+            title: 'Rhythmic, Beat-Matched Pacing',
+            subtitle: 'Dynamic cuts timed to audio transients and psychological retention hooks.',
+            tag: 'Dynamic Editing',
+            icon: 'Activity',
+            badgeText: 'Dynamic Speed Ramps & SFX',
+            stat: '128 BPM',
+            statLabel: 'Rhythm Cut Sync',
+            videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4',
+            image: 'https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&w=1200&q=80'
+          },
+          {
+            id: 'rapid-delivery',
+            title: '48-Hour Rapid Delivery Guarantee',
+            subtitle: 'High-speed cloud pipeline ensuring your marketing campaigns launch on schedule.',
+            tag: 'Turnaround',
+            icon: 'Clock',
+            badgeText: 'Zero Listing Delays Guaranteed',
+            stat: '24-48 Hours',
+            statLabel: 'Priority Delivery',
+            videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4',
+            image: 'https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&w=1200&q=80'
+          },
+          {
+            id: 'commercial-licensing',
+            title: 'Full Commercial Music Licensing',
+            subtitle: 'Perpetual commercial clearance with zero copyright strikes across all platforms.',
+            tag: 'Royalty-Free',
+            icon: 'Shield',
+            badgeText: 'Artlist & Musicbed Worldwide Sync Clearance',
+            stat: '100% Cleared',
+            statLabel: 'Commercial Sync',
+            videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4',
+            image: 'https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=1200&q=80'
+          },
+          {
+            id: 'frame-io',
+            title: 'Frictionless Frame.io Reviews',
+            subtitle: 'Click, timestamp, and review edits collaboratively with frame-accurate notes.',
+            tag: 'Cloud Workflow',
+            icon: 'MessageSquare',
+            badgeText: 'Frame-Accurate Timecode Notes & Approvals',
+            stat: 'Frame-Accurate',
+            statLabel: 'Collaborative Review',
+            videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/TearsOfSteel.mp4',
+            image: 'https://images.unsplash.com/photo-1600566753376-12c8ab7fb75b?auto=format&fit=crop&w=1200&q=80'
+          },
+          {
+            id: 'multi-platform',
+            title: 'Multi-Platform 16:9 & 9:16 Exports',
+            subtitle: 'Master 4K landscape walkthroughs plus high-retention 9:16 vertical social cutdowns.',
+            tag: 'Dual Aspect',
+            icon: 'Layers',
+            badgeText: 'Optimized for YouTube, MLS, Reels & TikTok',
+            stat: '16:9 & 9:16',
+            statLabel: 'Master Deliverables',
+            videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/WeAreGoingOnBullrun.mp4',
+            image: 'https://images.unsplash.com/photo-1600585154526-990dced4db0d?auto=format&fit=crop&w=1200&q=80'
+          }
+        ]
       });
       await defaultDoc.save();
       const obj = defaultDoc.toObject();
       return { ...obj, id: obj._id.toString() };
     }
-    return { ...config, id: config._id.toString() };
+
+    // Auto-migrate legacy placeholders if found
+    let needsUpdate = false;
+    if (config.email === 'contact@diptovisuals.com' || config.email === 'hello@diptovisuals.com') {
+      config.email = 'diptoalmamun34@gmail.com';
+      needsUpdate = true;
+    }
+    if (!config.whatsapp || config.whatsapp.includes('1700000000') || config.whatsapp === '+8801700000000' || config.whatsapp === '+880 1700-000000') {
+      config.whatsapp = '01791315443';
+      needsUpdate = true;
+    }
+    if (config.instagram === 'https://instagram.com' || !config.instagram) {
+      config.instagram = 'https://instagram.com/diptoalmamun';
+      needsUpdate = true;
+    }
+    if (config.youtube === 'https://youtube.com' || !config.youtube) {
+      config.youtube = 'https://youtube.com/@diptovideoediting';
+      needsUpdate = true;
+    }
+    if (!config.facebook || config.facebook === 'https://facebook.com') {
+      config.facebook = 'https://www.facebook.com/profile.php?id=61591489202271';
+      needsUpdate = true;
+    }
+    if (!config.fiverr) {
+      config.fiverr = 'https://www.fiverr.com';
+      needsUpdate = true;
+    }
+    if (!config.upwork) {
+      config.upwork = 'https://www.upwork.com';
+      needsUpdate = true;
+    }
+    if (!config.whyChooseUsTitle) {
+      config.whyChooseUsTitle = 'Visual Storytelling That';
+      needsUpdate = true;
+    }
+    if (!config.whyChooseUsGradient) {
+      config.whyChooseUsGradient = 'Commands High Valuation';
+      needsUpdate = true;
+    }
+    if (!config.whyChooseUsBadge) {
+      config.whyChooseUsBadge = 'The Dipto Visuals Advantage';
+      needsUpdate = true;
+    }
+    if (!config.whyChooseUsVideoUrl || config.whyChooseUsVideoUrl.includes('commondatastorage.googleapis.com')) {
+      config.whyChooseUsVideoUrl = '/uploads/sample-video-1.mp4';
+      needsUpdate = true;
+    }
+    if (Array.isArray(config.whyChooseUsItems)) {
+      let itemsChanged = false;
+      config.whyChooseUsItems = config.whyChooseUsItems.map(item => {
+        if (item.videoUrl && item.videoUrl.includes('commondatastorage.googleapis.com')) {
+          itemsChanged = true;
+          return { ...item, videoUrl: '/uploads/sample-video-1.mp4' };
+        }
+        return item;
+      });
+      if (itemsChanged) needsUpdate = true;
+    }
+    if (!Array.isArray(config.whyChooseUsItems) || config.whyChooseUsItems.length === 0) {
+      config.whyChooseUsItems = [
+        {
+          id: 'color-science',
+          title: 'Hollywood DaVinci Color Science',
+          subtitle: 'ACES & Kodak 2383 35mm film emulation with balanced natural skin tones.',
+          tag: 'Color Science',
+          icon: 'Palette',
+          badgeText: 'Rec.709 vs Kodak 2383 Cinema LUT',
+          stat: '32-Bit Float',
+          statLabel: 'Wide Color Gamut',
+          videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4',
+          image: 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1200&q=80'
+        },
+        {
+          id: 'beat-pacing',
+          title: 'Rhythmic, Beat-Matched Pacing',
+          subtitle: 'Dynamic cuts timed to audio transients and psychological retention hooks.',
+          tag: 'Dynamic Editing',
+          icon: 'Activity',
+          badgeText: 'Dynamic Speed Ramps & SFX',
+          stat: '128 BPM',
+          statLabel: 'Rhythm Cut Sync',
+          videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4',
+          image: 'https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&w=1200&q=80'
+        },
+        {
+          id: 'rapid-delivery',
+          title: '48-Hour Rapid Delivery Guarantee',
+          subtitle: 'High-speed cloud pipeline ensuring your marketing campaigns launch on schedule.',
+          tag: 'Turnaround',
+          icon: 'Clock',
+          badgeText: 'Zero Listing Delays Guaranteed',
+          stat: '24-48 Hours',
+          statLabel: 'Priority Delivery',
+          videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4',
+          image: 'https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&w=1200&q=80'
+        },
+        {
+          id: 'commercial-licensing',
+          title: 'Full Commercial Music Licensing',
+          subtitle: 'Perpetual commercial clearance with zero copyright strikes across all platforms.',
+          tag: 'Royalty-Free',
+          icon: 'Shield',
+          badgeText: 'Artlist & Musicbed Worldwide Sync Clearance',
+          stat: '100% Cleared',
+          statLabel: 'Commercial Sync',
+          videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4',
+          image: 'https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=1200&q=80'
+        },
+        {
+          id: 'frame-io',
+          title: 'Frictionless Frame.io Reviews',
+          subtitle: 'Click, timestamp, and review edits collaboratively with frame-accurate notes.',
+          tag: 'Cloud Workflow',
+          icon: 'MessageSquare',
+          badgeText: 'Frame-Accurate Timecode Notes & Approvals',
+          stat: 'Frame-Accurate',
+          statLabel: 'Collaborative Review',
+          videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/TearsOfSteel.mp4',
+          image: 'https://images.unsplash.com/photo-1600566753376-12c8ab7fb75b?auto=format&fit=crop&w=1200&q=80'
+        },
+        {
+          id: 'multi-platform',
+          title: 'Multi-Platform 16:9 & 9:16 Exports',
+          subtitle: 'Master 4K landscape walkthroughs plus high-retention 9:16 vertical social cutdowns.',
+          tag: 'Dual Aspect',
+          icon: 'Layers',
+          badgeText: 'Optimized for YouTube, MLS, Reels & TikTok',
+          stat: '16:9 & 9:16',
+          statLabel: 'Master Deliverables',
+          videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/WeAreGoingOnBullrun.mp4',
+          image: 'https://images.unsplash.com/photo-1600585154526-990dced4db0d?auto=format&fit=crop&w=1200&q=80'
+        }
+      ];
+      needsUpdate = true;
+    }
+
+    if (needsUpdate) {
+      await config.save();
+    }
+
+    const obj = config.toObject ? config.toObject() : config;
+    return { ...obj, id: (obj._id || obj.id).toString() };
   }
 
   async saveSiteConfig(configData) {

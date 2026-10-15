@@ -35,11 +35,14 @@ const Settings = () => {
     videosEdited: '500+',
     viewsGenerated: '100M+',
     clientSatisfaction: '99%',
-    email: 'contact@diptovisuals.com',
-    whatsapp: '+880 1791-315443',
+    email: 'diptoalmamun34@gmail.com',
+    whatsapp: '01791315443',
     bookingUrl: 'https://cal.com',
-    instagram: 'https://instagram.com',
-    youtube: 'https://youtube.com',
+    instagram: 'https://instagram.com/diptoalmamun',
+    youtube: 'https://youtube.com/@diptovideoediting',
+    facebook: 'https://www.facebook.com/profile.php?id=61591489202271',
+    fiverr: 'https://www.fiverr.com',
+    upwork: 'https://www.upwork.com',
     linkedin: 'https://linkedin.com'
   });
 
@@ -372,7 +375,7 @@ const Settings = () => {
                   type="text"
                   value={siteConfig.whatsapp}
                   onChange={(e) => handleConfigChange('whatsapp', e.target.value)}
-                  placeholder="+8801700000000"
+                  placeholder="01791315443"
                   className="w-full bg-slate-950 border border-slate-800 focus:border-teal-500 text-slate-100 rounded-xl px-4 py-2.5 text-sm focus:outline-none"
                 />
               </div>
@@ -408,6 +411,41 @@ const Settings = () => {
                   value={siteConfig.youtube}
                   onChange={(e) => handleConfigChange('youtube', e.target.value)}
                   placeholder="https://youtube.com/..."
+                  className="w-full bg-slate-950 border border-slate-800 focus:border-teal-500 text-slate-100 rounded-xl px-4 py-2.5 text-sm focus:outline-none"
+                />
+              </div>
+
+              <div>
+                <label className="block text-xs font-semibold text-slate-400 mb-1.5">Facebook Profile</label>
+                <input
+                  type="url"
+                  value={siteConfig.facebook}
+                  onChange={(e) => handleConfigChange('facebook', e.target.value)}
+                  placeholder="https://facebook.com/..."
+                  className="w-full bg-slate-950 border border-slate-800 focus:border-teal-500 text-slate-100 rounded-xl px-4 py-2.5 text-sm focus:outline-none"
+                />
+              </div>
+            </div>
+
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+              <div>
+                <label className="block text-xs font-semibold text-slate-400 mb-1.5">Fiverr Profile / URL</label>
+                <input
+                  type="url"
+                  value={siteConfig.fiverr}
+                  onChange={(e) => handleConfigChange('fiverr', e.target.value)}
+                  placeholder="https://fiverr.com/..."
+                  className="w-full bg-slate-950 border border-slate-800 focus:border-teal-500 text-slate-100 rounded-xl px-4 py-2.5 text-sm focus:outline-none"
+                />
+              </div>
+
+              <div>
+                <label className="block text-xs font-semibold text-slate-400 mb-1.5">Upwork Profile / URL</label>
+                <input
+                  type="url"
+                  value={siteConfig.upwork}
+                  onChange={(e) => handleConfigChange('upwork', e.target.value)}
+                  placeholder="https://upwork.com/..."
                   className="w-full bg-slate-950 border border-slate-800 focus:border-teal-500 text-slate-100 rounded-xl px-4 py-2.5 text-sm focus:outline-none"
                 />
               </div>

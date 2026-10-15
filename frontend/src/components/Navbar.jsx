@@ -68,13 +68,14 @@ const Navbar = () => {
 
         {/* Right CTA */}
         <div className="hidden md:flex items-center gap-4 flex-shrink-0">
-          <a
-            href="#contact"
-            className="group relative inline-flex items-center gap-1.5 px-6 py-2.5 rounded-full bg-gradient-to-r from-brand-electric to-brand-orange text-white text-sm font-bold shadow-lg shadow-brand-electric/30 hover:shadow-brand-electric/50 hover:scale-105 transition-all duration-300 whitespace-nowrap"
+          <button
+            type="button"
+            onClick={() => window.dispatchEvent(new CustomEvent('open-booking-modal', { detail: { package: null } }))}
+            className="group relative inline-flex items-center gap-1.5 px-6 py-2.5 rounded-full bg-gradient-to-r from-brand-electric to-brand-orange text-white text-sm font-bold shadow-lg shadow-brand-electric/30 hover:shadow-brand-electric/50 hover:scale-105 transition-all duration-300 whitespace-nowrap cursor-pointer"
           >
             <span>Get a Quote</span>
             <ArrowUpRight className="w-4 h-4 text-white group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
-          </a>
+          </button>
         </div>
 
         {/* Mobile Menu Toggle Button */}
@@ -111,13 +112,16 @@ const Navbar = () => {
           </div>
 
           <div className="pt-8 w-full max-w-xs">
-            <a
-              href="#contact"
-              onClick={() => setMobileMenuOpen(false)}
-              className="flex justify-center items-center gap-2 w-full py-4 rounded-full bg-gradient-to-r from-brand-electric to-brand-orange text-white font-bold shadow-lg shadow-brand-electric/40 text-lg"
+            <button
+              type="button"
+              onClick={() => {
+                setMobileMenuOpen(false);
+                window.dispatchEvent(new CustomEvent('open-booking-modal', { detail: { package: null } }));
+              }}
+              className="flex justify-center items-center gap-2 w-full py-4 rounded-full bg-gradient-to-r from-brand-electric to-brand-orange text-white font-bold shadow-lg shadow-brand-electric/40 text-lg cursor-pointer"
             >
               Get a Quote
-            </a>
+            </button>
           </div>
         </div>
       )}

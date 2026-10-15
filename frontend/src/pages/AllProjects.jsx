@@ -16,7 +16,7 @@ const DEFAULT_VIDEO_PROJECTS = [
     tools: ['Premiere Pro', 'DaVinci Resolve'],
     desc: 'Cinematic 4K walkthrough featuring speed ramps, smooth gimbal movements, and a warm, inviting Hollywood color grade to highlight a $12.5M luxury architectural property.',
     image: 'https://images.unsplash.com/photo-1613977257363-707ba9348227?auto=format&fit=crop&w=1200&q=80',
-    videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4',
+    videoUrl: '/videos/sample-video-1.mp4',
   },
   {
     id: 'vid_2',
@@ -28,7 +28,7 @@ const DEFAULT_VIDEO_PROJECTS = [
     tools: ['Premiere Pro', 'After Effects'],
     desc: 'High-retention 9:16 vertical edit engineered with 3-second visual hooks, kinetic motion typography, and beat-synced cuts.',
     image: 'https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&w=800&q=80',
-    videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4',
+    videoUrl: '/videos/sample-video-2.mp4',
   },
   {
     id: 'vid_3',
@@ -40,7 +40,7 @@ const DEFAULT_VIDEO_PROJECTS = [
     tools: ['DaVinci Resolve', 'Premiere Pro'],
     desc: 'Sweeping aerial cinematography highlighting parcel boundaries, panoramic ocean vistas, and sunset DaVinci tone mapping.',
     image: 'https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&w=1200&q=80',
-    videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4',
+    videoUrl: '/videos/sample-video-1.mp4',
   },
   {
     id: 'vid_4',
@@ -52,7 +52,7 @@ const DEFAULT_VIDEO_PROJECTS = [
     tools: ['Premiere Pro', 'After Effects'],
     desc: 'Fast-paced promo engineered for high click-through ad campaigns, featuring agency lower thirds and licensed soundtrack.',
     image: 'https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?auto=format&fit=crop&w=1200&q=80',
-    videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4',
+    videoUrl: '/videos/sample-video-2.mp4',
   },
   {
     id: 'vid_5',
@@ -64,7 +64,7 @@ const DEFAULT_VIDEO_PROJECTS = [
     tools: ['Premiere Pro', 'CapCut Pro'],
     desc: 'Authority-building mobile reel showcasing listing negotiations, curated lifestyle, and active market insights.',
     image: 'https://images.unsplash.com/photo-1560518883-ce09059eeffa?auto=format&fit=crop&w=800&q=80',
-    videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/TearsOfSteel.mp4',
+    videoUrl: '/videos/sample-video-1.mp4',
   },
   {
     id: 'vid_6',
@@ -76,7 +76,7 @@ const DEFAULT_VIDEO_PROJECTS = [
     tools: ['Premiere Pro', 'DaVinci Resolve'],
     desc: 'Atmospheric twilight tour capturing indoor-outdoor architectural harmony, ambient lighting, and rich spatial foley audio.',
     image: 'https://images.unsplash.com/photo-1512915922686-57c11dde9b6b?auto=format&fit=crop&w=1200&q=80',
-    videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/WeAreGoingOnBullrun.mp4',
+    videoUrl: '/videos/sample-video-2.mp4',
   }
 ];
 

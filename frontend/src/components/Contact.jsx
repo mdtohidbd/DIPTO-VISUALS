@@ -1,9 +1,16 @@
 import React, { useState } from 'react';
 import { Mail, Send, MessageSquare, Clock, Globe, ArrowRight } from 'lucide-react';
 import { useSiteConfig } from '../context/SiteConfigContext';
-import facebook from '../assets/facebook.png';
-import instagram from '../assets/instagram.png';
-import linkedin from '../assets/linkedin.png';
+import { 
+  InstagramIcon, 
+  YouTubeIcon, 
+  FacebookIcon, 
+  WhatsAppIcon, 
+  FiverrIcon, 
+  UpworkIcon, 
+  GmailIcon, 
+  LinkedInIcon 
+} from './SocialIcons';
 
 const PROJECT_TYPES = [
   'Luxury Walkthrough (4K)',
@@ -95,42 +102,132 @@ const Contact = () => {
             </div>
 
             {/* Social Channels */}
-            <div className="pt-8 border-t border-[var(--card-border)] space-y-4">
-              <p className="text-xs text-brand-muted uppercase tracking-widest font-semibold">Reach Out Directly</p>
-              
-              <div className="flex flex-col gap-4">
-                <a 
-                  href={`https://wa.me/${(config?.whatsapp || '+8801791315443').replace(/[^0-9]/g, '')}`} 
-                  target="_blank" 
-                  rel="noreferrer"
-                  className="flex items-center gap-3 w-fit group"
-                >
-                  <div className="w-10 h-10 rounded-full bg-[#25D366]/20 border border-[#25D366]/50 flex items-center justify-center group-hover:bg-[#25D366] transition-colors">
-                    <MessageSquare className="w-4 h-4 text-[#25D366] group-hover:text-white" />
-                  </div>
-                  <span className="text-brand-heading font-medium group-hover:text-[#25D366] transition-colors">
-                    {config?.whatsapp || '+880 1791-315443'} (WhatsApp)
-                  </span>
-                </a>
+            <div className="pt-8 border-t border-[var(--card-border)] space-y-6">
+              <div>
+                <p className="text-xs text-brand-muted uppercase tracking-widest font-semibold mb-3">Reach Out Directly</p>
                 
-                <a href="mailto:hello@diptovisuals.com" className="flex items-center gap-3 w-fit group">
-                  <div className="w-10 h-10 rounded-full bg-brand-electric/20 border border-brand-electric/50 flex items-center justify-center group-hover:bg-brand-electric transition-colors">
-                    <Mail className="w-4 h-4 text-brand-electric group-hover:text-white" />
-                  </div>
-                  <span className="text-brand-heading font-medium group-hover:text-brand-electric transition-colors">hello@diptovisuals.com</span>
-                </a>
+                <div className="flex flex-col gap-3.5">
+                  {(() => {
+                    const currentWa = (config?.whatsapp && !config.whatsapp.includes('1700000000')) 
+                      ? config.whatsapp 
+                      : '01791315443';
+                    const rawWhatsapp = currentWa.replace(/[^0-9]/g, '');
+                    const waNumber = rawWhatsapp.startsWith('0') ? '88' + rawWhatsapp : (rawWhatsapp.startsWith('88') ? rawWhatsapp : '880' + rawWhatsapp);
+                    const displayWhatsapp = currentWa;
+                    const displayEmail = config?.email || 'diptoalmamun34@gmail.com';
+
+                    return (
+                      <>
+                        <a 
+                          href={`https://wa.me/${waNumber}?text=Hi%20Dipto,%20I'm%20interested%20in%20your%20video%20editing%20services!`} 
+                          target="_blank" 
+                          rel="noreferrer"
+                          className="flex items-center gap-3 w-fit group"
+                        >
+                          <div className="w-10 h-10 rounded-full bg-[#25D366]/20 border border-[#25D366]/50 flex items-center justify-center group-hover:bg-[#25D366] transition-colors shadow-sm">
+                            <WhatsAppIcon className="w-4 h-4 text-[#25D366] group-hover:text-white transition-colors" />
+                          </div>
+                          <div className="flex flex-col">
+                            <span className="text-brand-heading font-semibold text-sm group-hover:text-[#25D366] transition-colors">
+                              {displayWhatsapp}
+                            </span>
+                            <span className="text-[11px] text-brand-muted">Direct WhatsApp Chat (Instant Reply)</span>
+                          </div>
+                        </a>
+                        
+                        <a href={`mailto:${displayEmail}`} className="flex items-center gap-3 w-fit group">
+                          <div className="w-10 h-10 rounded-full bg-brand-electric/20 border border-brand-electric/50 flex items-center justify-center group-hover:bg-brand-electric transition-colors shadow-sm">
+                            <GmailIcon className="w-4 h-4 text-brand-electric group-hover:text-white transition-colors" />
+                          </div>
+                          <div className="flex flex-col">
+                            <span className="text-brand-heading font-semibold text-sm group-hover:text-brand-electric transition-colors">
+                              {displayEmail}
+                            </span>
+                            <span className="text-[11px] text-brand-muted">Direct Project Proposals & Inquiries</span>
+                          </div>
+                        </a>
+                      </>
+                    );
+                  })()}
+                </div>
               </div>
 
-              <div className="flex items-center space-x-3 pt-6">
-                <a href="#" className="w-10 h-10 rounded-full bg-white/5 border border-[var(--card-border)] flex items-center justify-center hover:bg-brand-electric/20 hover:border-brand-electric/50 transition-all">
-                  <img src={facebook} alt="Facebook" className="w-4 h-4 opacity-70" />
-                </a>
-                <a href="#" className="w-10 h-10 rounded-full bg-white/5 border border-[var(--card-border)] flex items-center justify-center hover:bg-brand-electric/20 hover:border-brand-electric/50 transition-all">
-                  <img src={instagram} alt="Instagram" className="w-4 h-4 opacity-70" />
-                </a>
-                <a href="#" className="w-10 h-10 rounded-full bg-white/5 border border-[var(--card-border)] flex items-center justify-center hover:bg-brand-electric/20 hover:border-brand-electric/50 transition-all">
-                  <img src={linkedin} alt="LinkedIn" className="w-4 h-4 opacity-70" />
-                </a>
+              <div>
+                <p className="text-xs text-brand-muted uppercase tracking-widest font-semibold mb-3">Connect & Marketplaces</p>
+                <div className="flex flex-wrap items-center gap-2.5">
+                  {config?.instagram && (
+                    <a 
+                      href={config.instagram} 
+                      target="_blank" 
+                      rel="noreferrer" 
+                      title="Instagram Profile (@diptoalmamun)"
+                      className="inline-flex items-center gap-2 px-3.5 py-2 rounded-xl bg-white/5 border border-[var(--card-border)] hover:bg-gradient-to-r hover:from-purple-600/20 hover:to-pink-600/20 hover:border-pink-500/50 hover:text-white transition-all text-brand-heading text-xs font-semibold group"
+                    >
+                      <InstagramIcon className="w-4 h-4 text-pink-400 group-hover:scale-110 transition-transform" />
+                      <span>Instagram</span>
+                    </a>
+                  )}
+                  {config?.youtube && (
+                    <a 
+                      href={config.youtube} 
+                      target="_blank" 
+                      rel="noreferrer" 
+                      title="YouTube Channel (@diptovideoediting)"
+                      className="inline-flex items-center gap-2 px-3.5 py-2 rounded-xl bg-white/5 border border-[var(--card-border)] hover:bg-red-500/20 hover:border-red-500/50 hover:text-white transition-all text-brand-heading text-xs font-semibold group"
+                    >
+                      <YouTubeIcon className="w-4 h-4 text-red-500 group-hover:scale-110 transition-transform" />
+                      <span>YouTube</span>
+                    </a>
+                  )}
+                  {config?.facebook && (
+                    <a 
+                      href={config.facebook} 
+                      target="_blank" 
+                      rel="noreferrer" 
+                      title="Facebook Profile"
+                      className="inline-flex items-center gap-2 px-3.5 py-2 rounded-xl bg-white/5 border border-[var(--card-border)] hover:bg-blue-600/20 hover:border-blue-500/50 hover:text-white transition-all text-brand-heading text-xs font-semibold group"
+                    >
+                      <FacebookIcon className="w-4 h-4 text-blue-500 group-hover:scale-110 transition-transform" />
+                      <span>Facebook</span>
+                    </a>
+                  )}
+                  {config?.fiverr && (
+                    <a 
+                      href={config.fiverr} 
+                      target="_blank" 
+                      rel="noreferrer" 
+                      title="Hire on Fiverr"
+                      className="inline-flex items-center gap-2 px-3.5 py-2 rounded-xl bg-white/5 border border-[var(--card-border)] hover:bg-emerald-500/20 hover:border-emerald-500/50 hover:text-white transition-all text-brand-heading text-xs font-semibold group"
+                    >
+                      <FiverrIcon className="w-4 h-4 group-hover:scale-110 transition-transform" />
+                      <span>Fiverr</span>
+                    </a>
+                  )}
+                  {config?.upwork && (
+                    <a 
+                      href={config.upwork} 
+                      target="_blank" 
+                      rel="noreferrer" 
+                      title="Hire on Upwork"
+                      className="inline-flex items-center gap-2 px-3.5 py-2 rounded-xl bg-white/5 border border-[var(--card-border)] hover:bg-[#14a800]/20 hover:border-[#14a800]/50 hover:text-white transition-all text-brand-heading text-xs font-semibold group"
+                    >
+                      <UpworkIcon className="w-4 h-4 text-[#14a800] group-hover:scale-110 transition-transform" />
+                      <span>Upwork</span>
+                    </a>
+                  )}
+                  {config?.linkedin && (
+                    <a 
+                      href={config.linkedin} 
+                      target="_blank" 
+                      rel="noreferrer" 
+                      title="LinkedIn Profile"
+                      className="inline-flex items-center gap-2 px-3.5 py-2 rounded-xl bg-white/5 border border-[var(--card-border)] hover:bg-sky-600/20 hover:border-sky-500/50 hover:text-white transition-all text-brand-heading text-xs font-semibold group"
+                    >
+                      <LinkedInIcon className="w-4 h-4 text-sky-400 group-hover:scale-110 transition-transform" />
+                      <span>LinkedIn</span>
+                    </a>
+                  )}
+                </div>
               </div>
             </div>
           </div>

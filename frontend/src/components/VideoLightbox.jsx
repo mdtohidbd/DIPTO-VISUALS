@@ -29,7 +29,7 @@ const VideoLightbox = ({ project, isOpen, onClose }) => {
   if (!project) return null;
 
   const isVertical = project.aspectRatio === '9:16' || project.category?.includes('Short-form') || project.category?.includes('Reel');
-  const rawUrl = project.videoUrl || project.video || 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4';
+  const rawUrl = project.videoUrl || project.video || '/videos/sample-video-1.mp4';
   const videoSource = rawUrl && rawUrl.startsWith('/uploads') ? `http://localhost:5000${rawUrl}` : rawUrl;
 
   return (

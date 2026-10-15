@@ -17,7 +17,7 @@ export const DEFAULT_CASE_STUDY = {
   title: 'Case Study: $4.8M Architectural Villa',
   subtitle: 'How transformative cinematic pacing and DaVinci color science turned a dormant listing into a bidding frenzy within 14 days.',
   image: 'https://images.unsplash.com/photo-1613977257363-707ba9348227?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80',
-  videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4',
+  videoUrl: '/videos/sample-video-1.mp4',
   challengeTitle: 'The Challenge',
   challengeDesc: 'The agency sat on flat, uninspiring gimbal footage for over 90 days. Prospects bounced within 6 seconds because the video lacked emotional pull, interior warmth, and architectural rhythm.',
   solutionTitle: 'The Strategic Edit',
@@ -107,9 +107,85 @@ export const DEFAULT_PRICING_PACKAGES = [
 
 export const DEFAULT_WHY_CHOOSE_US = {
   badge: 'The Dipto Visuals Advantage',
-  title: 'Visual Storytelling That Commands High Valuation',
-  subtitle: 'Exceptional real estate video isn\'t merely about documenting square footage—it\'s about orchestrating desire. We blend Hollywood-grade color mapping, psychological cut pacing, and rich soundscapes so buyers fall in love before stepping through the door.',
-  image: 'https://images.unsplash.com/photo-1512918728675-ed5a9ecdebfd?auto=format&fit=crop&w=1000&q=80',
+  title: 'Visual Storytelling That',
+  gradient: 'Commands High Valuation',
+  subtitle: "Exceptional real estate video isn't merely about documenting square footage—it's about orchestrating desire. We blend Hollywood-grade color mapping, psychological cut pacing, and rich soundscapes so buyers fall in love before stepping through the door.",
+  image: 'https://images.unsplash.com/photo-1512918728675-ed5a9ecdebfd?auto=format&fit=crop&w=1200&q=80',
+  videoUrl: '/videos/sample-video-1.mp4',
+  items: [
+    {
+      id: 'color-science',
+      title: 'Hollywood DaVinci Color Science',
+      subtitle: 'ACES & Kodak 2383 35mm film emulation with balanced natural skin tones.',
+      tag: 'Color Science',
+      icon: 'Palette',
+      badgeText: 'Rec.709 vs Kodak 2383 Cinema LUT',
+      stat: '32-Bit Float',
+      statLabel: 'Wide Color Gamut',
+      videoUrl: '/videos/sample-video-1.mp4',
+      image: 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1200&q=80'
+    },
+    {
+      id: 'beat-pacing',
+      title: 'Rhythmic, Beat-Matched Pacing',
+      subtitle: 'Dynamic cuts timed to audio transients and psychological retention hooks.',
+      tag: 'Dynamic Editing',
+      icon: 'Activity',
+      badgeText: 'Dynamic Speed Ramps & SFX',
+      stat: '128 BPM',
+      statLabel: 'Rhythm Cut Sync',
+      videoUrl: '/videos/sample-video-2.mp4',
+      image: 'https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&w=1200&q=80'
+    },
+    {
+      id: 'rapid-delivery',
+      title: '48-Hour Rapid Delivery Guarantee',
+      subtitle: 'High-speed cloud pipeline ensuring your marketing campaigns launch on schedule.',
+      tag: 'Turnaround',
+      icon: 'Clock',
+      badgeText: 'Zero Listing Delays Guaranteed',
+      stat: '24-48 Hours',
+      statLabel: 'Priority Delivery',
+      videoUrl: '/videos/sample-video-1.mp4',
+      image: 'https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&w=1200&q=80'
+    },
+    {
+      id: 'commercial-licensing',
+      title: 'Full Commercial Music Licensing',
+      subtitle: 'Perpetual commercial clearance with zero copyright strikes across all platforms.',
+      tag: 'Royalty-Free',
+      icon: 'Shield',
+      badgeText: 'Artlist & Musicbed Worldwide Sync Clearance',
+      stat: '100% Cleared',
+      statLabel: 'Commercial Sync',
+      videoUrl: '/videos/sample-video-2.mp4',
+      image: 'https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=1200&q=80'
+    },
+    {
+      id: 'frame-io',
+      title: 'Frictionless Frame.io Reviews',
+      subtitle: 'Click, timestamp, and review edits collaboratively with frame-accurate notes.',
+      tag: 'Cloud Workflow',
+      icon: 'MessageSquare',
+      badgeText: 'Frame-Accurate Timecode Notes & Approvals',
+      stat: 'Frame-Accurate',
+      statLabel: 'Collaborative Review',
+      videoUrl: '/videos/sample-video-1.mp4',
+      image: 'https://images.unsplash.com/photo-1600566753376-12c8ab7fb75b?auto=format&fit=crop&w=1200&q=80'
+    },
+    {
+      id: 'multi-platform',
+      title: 'Multi-Platform 16:9 & 9:16 Exports',
+      subtitle: 'Master 4K landscape walkthroughs plus high-retention 9:16 vertical social cutdowns.',
+      tag: 'Dual Aspect',
+      icon: 'Layers',
+      badgeText: 'Optimized for YouTube, MLS, Reels & TikTok',
+      stat: '16:9 & 9:16',
+      statLabel: 'Master Deliverables',
+      videoUrl: '/videos/sample-video-2.mp4',
+      image: 'https://images.unsplash.com/photo-1600585154526-990dced4db0d?auto=format&fit=crop&w=1200&q=80'
+    }
+  ],
   reasons: [
     "Hollywood DaVinci Color Science",
     "Rhythmic, Beat-Matched Pacing",
@@ -235,9 +311,11 @@ export const DEFAULT_CONFIG = {
   whyChooseUsBadge: 'The Dipto Visuals Advantage',
   whyChooseUsTitle: 'Visual Storytelling That',
   whyChooseUsGradient: 'Commands High Valuation',
-  whyChooseUsSubtitle: 'Exceptional real estate video isn\'t merely about documenting square footage—it\'s about orchestrating desire. We blend Hollywood-grade color mapping, psychological cut pacing, and rich soundscapes so buyers fall in love before stepping through the door.',
+  whyChooseUsSubtitle: DEFAULT_WHY_CHOOSE_US.subtitle,
   whyChooseUsImage: DEFAULT_WHY_CHOOSE_US.image,
+  whyChooseUsVideoUrl: DEFAULT_WHY_CHOOSE_US.videoUrl,
   whyChooseUsReasons: DEFAULT_WHY_CHOOSE_US.reasons,
+  whyChooseUsItems: DEFAULT_WHY_CHOOSE_US.items,
 
   faqBadge: 'Client Inquiries',
   faqTitle: 'Frequently Asked',
@@ -254,11 +332,14 @@ export const DEFAULT_CONFIG = {
 
   sectionVisibility: DEFAULT_SECTION_VISIBILITY,
 
-  email: 'contact@diptovisuals.com',
-  whatsapp: '+880 1791-315443',
+  email: 'diptoalmamun34@gmail.com',
+  whatsapp: '01791315443',
   bookingUrl: 'https://cal.com',
-  instagram: 'https://instagram.com',
-  youtube: 'https://youtube.com',
+  instagram: 'https://instagram.com/diptoalmamun',
+  youtube: 'https://youtube.com/@diptovideoediting',
+  facebook: 'https://www.facebook.com/profile.php?id=61591489202271',
+  fiverr: 'https://www.fiverr.com',
+  upwork: 'https://www.upwork.com',
   linkedin: 'https://linkedin.com'
 };
 
@@ -273,6 +354,40 @@ export const SiteConfigProvider = ({ children }) => {
       const cached = localStorage.getItem('portfolio_site_config');
       if (cached) {
         const parsed = JSON.parse(cached);
+        // Migrate old placeholder values
+        if (parsed.email === 'contact@diptovisuals.com' || parsed.email === 'hello@diptovisuals.com') {
+          parsed.email = 'diptoalmamun34@gmail.com';
+        }
+        if (parsed.instagram === 'https://instagram.com') {
+          parsed.instagram = 'https://instagram.com/diptoalmamun';
+        }
+        if (parsed.youtube === 'https://youtube.com') {
+          parsed.youtube = 'https://youtube.com/@diptovideoediting';
+        }
+        if (!parsed.facebook || parsed.facebook === 'https://facebook.com') {
+          parsed.facebook = 'https://www.facebook.com/profile.php?id=61591489202271';
+        }
+        if (!parsed.fiverr) {
+          parsed.fiverr = 'https://www.fiverr.com';
+        }
+        if (!parsed.upwork) {
+          parsed.upwork = 'https://www.upwork.com';
+        }
+        if (!parsed.whatsapp || parsed.whatsapp.includes('1700000000') || parsed.whatsapp === '+8801700000000') {
+          parsed.whatsapp = '01791315443';
+        }
+        if (parsed.whyChooseUsVideoUrl && parsed.whyChooseUsVideoUrl.includes('commondatastorage.googleapis.com')) {
+          parsed.whyChooseUsVideoUrl = '/videos/sample-video-1.mp4';
+        }
+        if (parsed.caseStudy?.videoUrl && parsed.caseStudy.videoUrl.includes('commondatastorage.googleapis.com')) {
+          parsed.caseStudy.videoUrl = '/videos/sample-video-1.mp4';
+        }
+        if (Array.isArray(parsed.whyChooseUsItems)) {
+          parsed.whyChooseUsItems = parsed.whyChooseUsItems.map(item => ({
+            ...item,
+            videoUrl: (!item.videoUrl || item.videoUrl.includes('commondatastorage.googleapis.com')) ? '/videos/sample-video-1.mp4' : item.videoUrl
+          }));
+        }
         return { ...DEFAULT_CONFIG, ...parsed };
       }
     } catch {
@@ -288,6 +403,24 @@ export const SiteConfigProvider = ({ children }) => {
         const data = await res.json();
         if (data && data.brandName) {
           const merged = { ...DEFAULT_CONFIG, ...data };
+          // Prefer active personal socials if backend returned initial generic placeholders
+          if (merged.email === 'contact@diptovisuals.com' || merged.email === 'hello@diptovisuals.com') {
+            merged.email = DEFAULT_CONFIG.email;
+          }
+          if (merged.instagram === 'https://instagram.com') {
+            merged.instagram = DEFAULT_CONFIG.instagram;
+          }
+          if (merged.youtube === 'https://youtube.com') {
+            merged.youtube = DEFAULT_CONFIG.youtube;
+          }
+          if (!merged.facebook || merged.facebook === 'https://facebook.com') {
+            merged.facebook = DEFAULT_CONFIG.facebook;
+          }
+          if (!merged.fiverr) merged.fiverr = DEFAULT_CONFIG.fiverr;
+          if (!merged.upwork) merged.upwork = DEFAULT_CONFIG.upwork;
+          if (!merged.whatsapp || merged.whatsapp.includes('1700000000') || merged.whatsapp === '+8801700000000') {
+            merged.whatsapp = '01791315443';
+          }
           // Guarantee nested arrays fallback properly if empty
           if (!Array.isArray(merged.services) || merged.services.length === 0) merged.services = DEFAULT_SERVICES;
           if (!Array.isArray(merged.processSteps) || merged.processSteps.length === 0) merged.processSteps = DEFAULT_PROCESS_STEPS;
@@ -298,6 +431,21 @@ export const SiteConfigProvider = ({ children }) => {
           if (!merged.caseStudy) merged.caseStudy = DEFAULT_CASE_STUDY;
           if (!merged.beforeAfter) merged.beforeAfter = DEFAULT_BEFORE_AFTER;
           if (!merged.sectionVisibility) merged.sectionVisibility = DEFAULT_SECTION_VISIBILITY;
+          if (!Array.isArray(merged.whyChooseUsItems) || merged.whyChooseUsItems.length === 0) {
+            merged.whyChooseUsItems = DEFAULT_WHY_CHOOSE_US.items;
+          }
+          if (!merged.whyChooseUsVideoUrl || merged.whyChooseUsVideoUrl.includes('commondatastorage.googleapis.com')) {
+            merged.whyChooseUsVideoUrl = '/videos/sample-video-1.mp4';
+          }
+          if (merged.caseStudy?.videoUrl && merged.caseStudy.videoUrl.includes('commondatastorage.googleapis.com')) {
+            merged.caseStudy.videoUrl = '/videos/sample-video-1.mp4';
+          }
+          if (Array.isArray(merged.whyChooseUsItems)) {
+            merged.whyChooseUsItems = merged.whyChooseUsItems.map(item => ({
+              ...item,
+              videoUrl: (!item.videoUrl || item.videoUrl.includes('commondatastorage.googleapis.com')) ? '/videos/sample-video-1.mp4' : item.videoUrl
+            }));
+          }
 
           setConfig(merged);
           localStorage.setItem('portfolio_site_config', JSON.stringify(merged));

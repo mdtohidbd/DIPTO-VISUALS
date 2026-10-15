@@ -5,8 +5,9 @@ import { useSiteConfig } from '../context/SiteConfigContext';
 const WhatsAppButton = () => {
     const { config } = useSiteConfig();
     const [isHovered, setIsHovered] = useState(false);
-    const cleanNumber = (config.whatsapp || '8801700000000').replace(/[^0-9]/g, '');
-    const whatsappLink = `https://wa.me/${cleanNumber}?text=Hi,%20I'm%20interested%20in%20your%20video%20editing%20services!`;
+    const rawNumber = (config.whatsapp || '01791315443').replace(/[^0-9]/g, '');
+    const cleanNumber = rawNumber.startsWith('0') ? '88' + rawNumber : (rawNumber.startsWith('88') ? rawNumber : '880' + rawNumber);
+    const whatsappLink = `https://wa.me/${cleanNumber}?text=Hi%20Dipto,%20I'm%20interested%20in%20your%20video%20editing%20services!`;
 
     return (
         <div className="fixed bottom-4 right-4 sm:bottom-8 sm:right-8 z-[9999]">

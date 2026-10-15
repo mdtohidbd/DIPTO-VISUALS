@@ -43,13 +43,13 @@ const fileFilter = (req, file, cb) => {
 const upload = multer({
   storage: storage,
   fileFilter: fileFilter,
-  limits: { fileSize: 300 * 1024 * 1024 } // 300MB limit for high quality video clips and reels
+  limits: { fileSize: 500 * 1024 * 1024 } // 500MB limit for high quality 4K video clips, reels, and walkthroughs
 });
 
 const handleUploadResponse = (req, res, err) => {
   if (err instanceof multer.MulterError) {
     if (err.code === 'LIMIT_FILE_SIZE') {
-      return res.status(400).json({ message: 'File is too large! Maximum allowed size is 300MB.' });
+      return res.status(400).json({ message: 'File is too large! Maximum allowed size is 500MB.' });
     }
     return res.status(400).json({ message: `Upload error: ${err.message}` });
   } else if (err) {

@@ -69,17 +69,20 @@ const Pricing = () => {
                 ))}
               </ul>
 
-              <a 
-                href={pkg.ctaLink || "#contact"} 
-                className={`w-full py-4 rounded-xl flex justify-center items-center gap-2 font-bold transition-all duration-300 ${
+              <button 
+                type="button"
+                onClick={() => {
+                  window.dispatchEvent(new CustomEvent('open-booking-modal', { detail: { package: pkg } }));
+                }}
+                className={`w-full py-4 rounded-xl flex justify-center items-center gap-2 font-bold transition-all duration-300 cursor-pointer ${
                   pkg.highlight 
-                    ? 'bg-gradient-to-r from-brand-electric to-brand-orange text-white hover:opacity-95 shadow-lg shadow-brand-electric/25 keep-text-white' 
-                    : 'bg-white/5 hover:bg-brand-electric hover:text-white border border-[var(--card-border)] text-brand-heading'
+                    ? 'bg-gradient-to-r from-brand-electric to-brand-orange text-white hover:opacity-95 shadow-lg shadow-brand-electric/25 keep-text-white hover:scale-[1.02]' 
+                    : 'bg-white/5 hover:bg-brand-electric hover:text-white border border-[var(--card-border)] text-brand-heading hover:scale-[1.02]'
                 }`}
               >
                 <span className={pkg.highlight ? 'text-white keep-text-white' : ''}>{pkg.ctaText || 'Book Now'}</span>
                 <ArrowRight className={`w-4 h-4 ${pkg.highlight ? 'text-white' : ''}`} />
-              </a>
+              </button>
             </motion.div>
           ))}
         </div>

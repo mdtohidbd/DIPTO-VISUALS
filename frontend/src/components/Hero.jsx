@@ -79,13 +79,14 @@ const Hero = () => {
                 <Play className="w-4 h-4 fill-white text-white" />
               </a>
 
-              <a
-                href={config.heroCta2Link || '#contact'}
-                className="group px-8 py-4 bg-white/5 border border-[var(--card-border)] text-brand-heading font-bold rounded-2xl hover:bg-white/10 hover:border-brand-electric/40 transition-all duration-300 flex items-center gap-2.5"
+              <button
+                type="button"
+                onClick={() => window.dispatchEvent(new CustomEvent('open-booking-modal', { detail: { package: null } }))}
+                className="group px-8 py-4 bg-white/5 border border-[var(--card-border)] text-brand-heading font-bold rounded-2xl hover:bg-white/10 hover:border-brand-electric/40 transition-all duration-300 flex items-center gap-2.5 cursor-pointer"
               >
                 <span>{config.heroCta2Text || 'GET A FREE QUOTE'}</span>
                 <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-              </a>
+              </button>
             </motion.div>
 
             {/* Software Stack */}

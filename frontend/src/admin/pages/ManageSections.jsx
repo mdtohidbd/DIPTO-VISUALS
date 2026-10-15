@@ -52,6 +52,8 @@ export const ManageSections = () => {
   const [successMsg, setSuccessMsg] = useState('');
   const [errorMsg, setErrorMsg] = useState('');
   const [uploadingField, setUploadingField] = useState(null);
+  const [uploadingVideo, setUploadingVideo] = useState(false);
+  const [videoProgress, setVideoProgress] = useState(0);
 
   useEffect(() => {
     fetchConfig();
@@ -74,7 +76,8 @@ export const ManageSections = () => {
           faqs: Array.isArray(data.faqs) && data.faqs.length > 0 ? data.faqs : DEFAULT_CONFIG.faqs,
           logos: Array.isArray(data.logos) && data.logos.length > 0 ? data.logos : DEFAULT_CONFIG.logos,
           stats: Array.isArray(data.stats) && data.stats.length > 0 ? data.stats : DEFAULT_CONFIG.stats,
-          whyChooseUsReasons: Array.isArray(data.whyChooseUsReasons) && data.whyChooseUsReasons.length > 0 ? data.whyChooseUsReasons : DEFAULT_CONFIG.whyChooseUsReasons
+          whyChooseUsReasons: Array.isArray(data.whyChooseUsReasons) && data.whyChooseUsReasons.length > 0 ? data.whyChooseUsReasons : DEFAULT_CONFIG.whyChooseUsReasons,
+          whyChooseUsItems: Array.isArray(data.whyChooseUsItems) && data.whyChooseUsItems.length > 0 ? data.whyChooseUsItems : (DEFAULT_CONFIG.whyChooseUsItems || DEFAULT_WHY_CHOOSE_US.items)
         }));
       }
     } catch (err) {
@@ -117,6 +120,29 @@ export const ManageSections = () => {
       }
     } catch (err) {
       alert('Upload failed: ' + (err.message || 'Network error'));
+    }
+  };
+
+  // Video uploader handler with live progress tracking
+  const handleVideoUpload = async (file, onComplete) => {
+    if (!file) return;
+    setUploadingVideo(true);
+    setVideoProgress(0);
+    setErrorMsg('');
+    try {
+      const res = await api.uploadVideo(file, (progress) => {
+        setVideoProgress(progress);
+      });
+      const url = res.url || res.videoUrl;
+      if (url) {
+        onComplete(url);
+        setSuccessMsg(`Video "${file.name}" uploaded successfully!`);
+        setTimeout(() => setSuccessMsg(''), 4000);
+      }
+    } catch (err) {
+      setErrorMsg('Video upload failed: ' + (err.message || 'File size exceeds limit or format unsupported.'));
+    } finally {
+      setUploadingVideo(false);
     }
   };
 
@@ -1405,8 +1431,123 @@ export const ManageSections = () => {
                     className="w-full px-3.5 py-2 rounded-xl bg-slate-950 border border-slate-800 text-xs text-slate-200 focus:border-teal-500 outline-none"
                   />
                 </div>
+                {/* Showcase Video URL / Upload */}
+                <div className="space-y-2 md:col-span-2 p-4 rounded-xl bg-slate-950/60 border border-slate-800">
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <label className="text-xs font-bold text-slate-200 flex items-center gap-2">
+                        <Film className="w-4 h-4 text-teal-400" />
+                        Showcase Video / Reel (Up to 500MB • 16:9 Cinema & 9:16 Reel)
+                      </label>
+                      <p className="text-[11px] text-slate-400 mt-0.5">
+                        Upload direct property walkthroughs or vertical reels. The live site allows visitors to switch between 16:9 Cinema and 9:16 Reel.
+                      </p>
+                    </div>
+                    {config.whyChooseUsVideoUrl && (
+                      <span className="text-[10px] font-semibold px-2 py-0.5 rounded-full bg-teal-500/10 text-teal-300 border border-teal-500/30">
+                        Video Connected
+                      </span>
+                    )}
+                  </div>
+
+                  <div className="flex gap-2">
+                    <input
+                      type="text"
+                      value={config.whyChooseUsVideoUrl || ''}
+                      onChange={(e) => updateField('whyChooseUsVideoUrl', e.target.value)}
+                      placeholder="Paste CDN video URL or upload MP4 / MOV / WebM directly..."
+                      className="flex-1 px-3.5 py-2.5 rounded-xl bg-slate-900 border border-slate-800 text-xs text-slate-200 focus:border-teal-500 outline-none"
+                    />
+                    <label className={`px-4 py-2.5 rounded-xl bg-teal-500/10 border border-teal-500/30 text-teal-300 text-xs font-semibold cursor-pointer flex items-center gap-2 hover:bg-teal-500/20 transition-all ${uploadingVideo ? 'opacity-60 pointer-events-none' : ''}`}>
+                      <Upload className="w-4 h-4" />
+                      <span>{uploadingVideo ? `Uploading (${videoProgress}%)` : 'Upload Video'}</span>
+                      <input
+                        type="file"
+                        accept="video/mp4,video/webm,video/quicktime,video/x-matroska,video/*"
+                        className="hidden"
+                        disabled={uploadingVideo}
+                        onChange={(e) => {
+                          if (e.target.files?.[0]) {
+                            handleVideoUpload(e.target.files[0], (url) => updateField('whyChooseUsVideoUrl', url));
+                          }
+                        }}
+                      />
+                    </label>
+                  </div>
+
+                  {/* Upload Progress Bar */}
+                  {uploadingVideo && (
+                    <div className="p-3 rounded-lg bg-teal-500/5 border border-teal-500/20 space-y-2">
+                      <div className="flex justify-between text-xs text-teal-300 font-medium">
+                        <span>Uploading high-capacity video to server...</span>
+                        <span className="font-bold">{videoProgress}%</span>
+                      </div>
+                      <div className="w-full bg-slate-800 rounded-full h-2 overflow-hidden">
+                        <div
+                          className="bg-gradient-to-r from-teal-500 to-red-500 h-2 rounded-full transition-all duration-300"
+                          style={{ width: `${videoProgress}%` }}
+                        />
+                      </div>
+                    </div>
+                  )}
+
+                  {/* Active Video Preview */}
+                  {config.whyChooseUsVideoUrl && (
+                    <div className="p-3 rounded-xl bg-slate-900/90 border border-slate-800 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
+                      <div className="flex items-center gap-3 min-w-0">
+                        <div className="w-28 h-16 bg-black rounded-lg overflow-hidden relative flex-shrink-0 border border-slate-700 shadow-md">
+                          <video
+                            src={config.whyChooseUsVideoUrl.startsWith('http') ? config.whyChooseUsVideoUrl : `http://localhost:5000${config.whyChooseUsVideoUrl}`}
+                            className="w-full h-full object-cover"
+                            muted
+                            playsInline
+                            controls={false}
+                            onMouseEnter={(e) => e.target.play().catch(() => {})}
+                            onMouseLeave={(e) => e.target.pause()}
+                          />
+                          <div className="absolute inset-0 flex items-center justify-center bg-black/20 pointer-events-none text-white/70">
+                            <Film className="w-4 h-4" />
+                          </div>
+                        </div>
+                        <div className="min-w-0">
+                          <p className="text-xs font-semibold text-slate-200 truncate">
+                            Preview Video (Hover thumbnail to play)
+                          </p>
+                          <p className="text-[11px] text-slate-400 font-mono truncate max-w-xs sm:max-w-md">
+                            {config.whyChooseUsVideoUrl}
+                          </p>
+                          <p className="text-[10px] text-teal-400 mt-0.5">
+                            Clean cinematic view: All dark text overlays removed for crystal-clear clarity.
+                          </p>
+                        </div>
+                      </div>
+                      <div className="flex items-center gap-2 self-end sm:self-center">
+                        <a
+                          href={config.whyChooseUsVideoUrl.startsWith('http') ? config.whyChooseUsVideoUrl : `http://localhost:5000${config.whyChooseUsVideoUrl}`}
+                          target="_blank"
+                          rel="noreferrer"
+                          className="px-2.5 py-1.5 rounded-lg bg-slate-800 text-slate-300 hover:text-white text-xs font-medium flex items-center gap-1"
+                        >
+                          <ExternalLink className="w-3.5 h-3.5" />
+                          <span>Open</span>
+                        </a>
+                        <button
+                          type="button"
+                          onClick={() => updateField('whyChooseUsVideoUrl', '')}
+                          className="px-2.5 py-1.5 rounded-lg bg-red-500/10 border border-red-500/20 text-red-400 hover:bg-red-500/20 text-xs font-medium flex items-center gap-1"
+                          title="Remove video and use fallback"
+                        >
+                          <Trash2 className="w-3.5 h-3.5" />
+                          <span>Remove</span>
+                        </button>
+                      </div>
+                    </div>
+                  )}
+                </div>
+
+                {/* Showcase Image URL / Upload */}
                 <div className="space-y-1.5">
-                  <label className="text-xs font-semibold text-slate-300">Showcase Image URL / Upload</label>
+                  <label className="text-xs font-semibold text-slate-300">Fallback Poster Image URL / Upload</label>
                   <div className="flex gap-2">
                     <input
                       type="text"
@@ -1417,6 +1558,7 @@ export const ManageSections = () => {
                     />
                     <label className="px-3.5 py-2 rounded-xl bg-teal-500/10 border border-teal-500/30 text-teal-300 text-xs font-semibold cursor-pointer flex items-center gap-1">
                       <Upload className="w-3.5 h-3.5" />
+                      <span>Image</span>
                       <input
                         type="file"
                         accept="image/*"
@@ -1430,6 +1572,7 @@ export const ManageSections = () => {
                     </label>
                   </div>
                 </div>
+
                 <div className="md:col-span-2 space-y-1.5">
                   <label className="text-xs font-semibold text-slate-300">Subtitle / Narrative</label>
                   <textarea
@@ -1441,49 +1584,149 @@ export const ManageSections = () => {
                 </div>
               </div>
 
-              {/* Reasons List */}
+              {/* Dynamic Interactive Advantages Manager */}
               <div className="p-4 rounded-xl bg-slate-800/40 border border-slate-800 space-y-3">
                 <div className="flex items-center justify-between">
-                  <h3 className="text-xs font-bold uppercase tracking-wider text-teal-400">Competitive Advantage Reasons (List)</h3>
+                  <div>
+                    <h3 className="text-xs font-bold uppercase tracking-wider text-teal-400">Competitive Advantages (Interactive Items)</h3>
+                    <p className="text-[11px] text-slate-400">Each advantage is dynamically interactive with its own feature badge, stats, and showcase behavior.</p>
+                  </div>
                   <button
                     type="button"
                     onClick={() => {
-                      const newReasons = [...(config.whyChooseUsReasons || []), 'New Advantage Reason'];
-                      updateField('whyChooseUsReasons', newReasons);
+                      const currentItems = Array.isArray(config.whyChooseUsItems) ? config.whyChooseUsItems : (DEFAULT_CONFIG.whyChooseUsItems || []);
+                      const newItem = {
+                        id: `adv-${Date.now()}`,
+                        title: 'New Competitive Advantage',
+                        subtitle: 'Key benefit description for luxury real estate clients.',
+                        tag: 'Feature',
+                        icon: 'Palette',
+                        badgeText: 'Signature Delivery Standard',
+                        stat: '100%',
+                        statLabel: 'Verified Benefit',
+                        videoUrl: config.whyChooseUsVideoUrl || '',
+                        image: config.whyChooseUsImage || ''
+                      };
+                      const updatedItems = [...currentItems, newItem];
+                      updateField('whyChooseUsItems', updatedItems);
+                      updateField('whyChooseUsReasons', updatedItems.map(i => i.title));
                     }}
                     className="px-2.5 py-1 rounded-lg bg-teal-500/10 border border-teal-500/30 text-teal-300 text-xs font-semibold flex items-center gap-1"
                   >
                     <Plus className="w-3 h-3" />
-                    <span>Add Reason</span>
+                    <span>Add Advantage</span>
                   </button>
                 </div>
 
-                <div className="space-y-2">
-                  {(config.whyChooseUsReasons || []).map((reason, idx) => (
-                    <div key={idx} className="flex items-center gap-2">
-                      <CheckCircle2 className="w-4 h-4 text-teal-400 flex-shrink-0" />
-                      <input
-                        type="text"
-                        value={reason}
-                        onChange={(e) => {
-                          const updated = [...config.whyChooseUsReasons];
-                          updated[idx] = e.target.value;
-                          updateField('whyChooseUsReasons', updated);
-                        }}
-                        className="flex-1 px-3 py-1.5 rounded-lg bg-slate-950 border border-slate-800 text-xs text-slate-200 outline-none"
-                      />
-                      <button
-                        type="button"
-                        onClick={() => {
-                          const updated = config.whyChooseUsReasons.filter((_, i) => i !== idx);
-                          updateField('whyChooseUsReasons', updated);
-                        }}
-                        className="p-1 text-slate-500 hover:text-red-400"
-                      >
-                        <Trash2 className="w-4 h-4" />
-                      </button>
-                    </div>
-                  ))}
+                <div className="space-y-3">
+                  {((Array.isArray(config.whyChooseUsItems) && config.whyChooseUsItems.length > 0)
+                    ? config.whyChooseUsItems
+                    : (DEFAULT_CONFIG.whyChooseUsItems || [])
+                  ).map((item, idx) => {
+                    const currentObj = typeof item === 'string' 
+                      ? { id: `legacy-${idx}`, title: item, subtitle: '', icon: 'Check', tag: 'Advantage' }
+                      : item;
+
+                    return (
+                      <div key={currentObj.id || idx} className="p-3 rounded-xl bg-slate-950 border border-slate-800/80 space-y-2">
+                        <div className="flex items-center justify-between gap-2">
+                          <span className="w-5 h-5 rounded-full bg-teal-500/20 text-teal-400 text-[10px] font-bold flex items-center justify-center">
+                            {idx + 1}
+                          </span>
+                          <input
+                            type="text"
+                            value={currentObj.title || ''}
+                            placeholder="Advantage Title (e.g. Hollywood DaVinci Color Science)"
+                            onChange={(e) => {
+                              const list = [...(config.whyChooseUsItems || DEFAULT_CONFIG.whyChooseUsItems)];
+                              list[idx] = { ...currentObj, title: e.target.value };
+                              updateField('whyChooseUsItems', list);
+                              updateField('whyChooseUsReasons', list.map(i => i.title || i));
+                            }}
+                            className="flex-1 px-3 py-1.5 rounded-lg bg-slate-900 border border-slate-800 text-xs text-slate-100 font-semibold outline-none"
+                          />
+                          <select
+                            value={currentObj.icon || 'Palette'}
+                            onChange={(e) => {
+                              const list = [...(config.whyChooseUsItems || DEFAULT_CONFIG.whyChooseUsItems)];
+                              list[idx] = { ...currentObj, icon: e.target.value };
+                              updateField('whyChooseUsItems', list);
+                            }}
+                            className="px-2.5 py-1.5 rounded-lg bg-slate-900 border border-slate-800 text-xs text-slate-200 outline-none"
+                          >
+                            <option value="Palette">Palette (Color Science)</option>
+                            <option value="Activity">Activity (Pacing & Audio)</option>
+                            <option value="Clock">Clock (Rapid Delivery)</option>
+                            <option value="Shield">Shield (Licensing)</option>
+                            <option value="MessageSquare">Message (Frame.io)</option>
+                            <option value="Layers">Layers (Multi-Platform)</option>
+                            <option value="CheckCircle2">CheckCircle</option>
+                          </select>
+                          <button
+                            type="button"
+                            onClick={() => {
+                              const list = (config.whyChooseUsItems || DEFAULT_CONFIG.whyChooseUsItems).filter((_, i) => i !== idx);
+                              updateField('whyChooseUsItems', list);
+                              updateField('whyChooseUsReasons', list.map(i => i.title || i));
+                            }}
+                            className="p-1.5 text-slate-500 hover:text-red-400 rounded-lg hover:bg-red-500/10 transition-colors"
+                          >
+                            <Trash2 className="w-4 h-4" />
+                          </button>
+                        </div>
+
+                        <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
+                          <input
+                            type="text"
+                            value={currentObj.subtitle || ''}
+                            placeholder="Subtitle / benefit narrative"
+                            onChange={(e) => {
+                              const list = [...(config.whyChooseUsItems || DEFAULT_CONFIG.whyChooseUsItems)];
+                              list[idx] = { ...currentObj, subtitle: e.target.value };
+                              updateField('whyChooseUsItems', list);
+                            }}
+                            className="sm:col-span-2 px-3 py-1 rounded-lg bg-slate-900 border border-slate-800 text-[11px] text-slate-300 outline-none"
+                          />
+                          <input
+                            type="text"
+                            value={currentObj.tag || ''}
+                            placeholder="Tag (e.g. Color Science)"
+                            onChange={(e) => {
+                              const list = [...(config.whyChooseUsItems || DEFAULT_CONFIG.whyChooseUsItems)];
+                              list[idx] = { ...currentObj, tag: e.target.value };
+                              updateField('whyChooseUsItems', list);
+                            }}
+                            className="px-3 py-1 rounded-lg bg-slate-900 border border-slate-800 text-[11px] text-slate-300 outline-none"
+                          />
+                        </div>
+
+                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                          <input
+                            type="text"
+                            value={currentObj.stat || ''}
+                            placeholder="Metric stat (e.g. 32-Bit Float, 48 Hours, 100%)"
+                            onChange={(e) => {
+                              const list = [...(config.whyChooseUsItems || DEFAULT_CONFIG.whyChooseUsItems)];
+                              list[idx] = { ...currentObj, stat: e.target.value };
+                              updateField('whyChooseUsItems', list);
+                            }}
+                            className="px-3 py-1 rounded-lg bg-slate-900 border border-slate-800 text-[11px] text-slate-300 outline-none"
+                          />
+                          <input
+                            type="text"
+                            value={currentObj.statLabel || ''}
+                            placeholder="Metric label (e.g. Wide Gamut, Turnaround)"
+                            onChange={(e) => {
+                              const list = [...(config.whyChooseUsItems || DEFAULT_CONFIG.whyChooseUsItems)];
+                              list[idx] = { ...currentObj, statLabel: e.target.value };
+                              updateField('whyChooseUsItems', list);
+                            }}
+                            className="px-3 py-1 rounded-lg bg-slate-900 border border-slate-800 text-[11px] text-slate-300 outline-none"
+                          />
+                        </div>
+                      </div>
+                    );
+                  })}
                 </div>
               </div>
             </div>

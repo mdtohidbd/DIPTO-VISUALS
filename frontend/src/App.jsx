@@ -25,11 +25,24 @@ import LenisScroll from './components/LenisScroll';
 import WhatsAppButton from './components/WhatsAppButton';
 import CustomCursor from './components/CustomCursor';
 import ScrollProgress from './components/ScrollProgress';
+import BookingModal from './components/BookingModal';
 import AdminApp from './admin/AdminApp';
 
 const HomePage = () => {
   const { config } = useSiteConfig();
   const vis = config?.sectionVisibility || {};
+
+  const [bookingModalOpen, setBookingModalOpen] = useState(false);
+  const [selectedBookingPkg, setSelectedBookingPkg] = useState(null);
+
+  useEffect(() => {
+    const handleOpenBooking = (e) => {
+      setSelectedBookingPkg(e.detail?.package || null);
+      setBookingModalOpen(true);
+    };
+    window.addEventListener('open-booking-modal', handleOpenBooking);
+    return () => window.removeEventListener('open-booking-modal', handleOpenBooking);
+  }, []);
 
   return (
     <div className="portfolio-app overflow-x-hidden w-full max-w-[100vw] relative">
@@ -37,6 +50,11 @@ const HomePage = () => {
       <LenisScroll />
       <WhatsAppButton />
       <ScrollProgress />
+      <BookingModal
+        isOpen={bookingModalOpen}
+        onClose={() => setBookingModalOpen(false)}
+        initialPackage={selectedBookingPkg}
+      />
       <div className="relative z-10">
         <Navbar />
         {vis.hero !== false && <Hero />}

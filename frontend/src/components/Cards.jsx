@@ -15,7 +15,7 @@ const Cards = ({ item, onSelect }) => {
   const isVertical = item.aspectRatio === '9:16' || item.category?.includes('Short-form') || item.category?.includes('Reel');
   const videoUrl = formatMedia(
     item.videoUrl || item.video,
-    'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4'
+    '/videos/sample-video-1.mp4'
   );
   const imageUrl = formatMedia(
     item.image,

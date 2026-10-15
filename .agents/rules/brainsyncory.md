@@ -1,7 +1,7 @@
 
 
-# Project Memory — MY-Portfolio
-> 31 notes | Score threshold: >40
+# Project Memory — DIPTO-VISUALS
+> 39 notes | Score threshold: >40
 
 ## Safety — Never Run Destructive Commands
 
