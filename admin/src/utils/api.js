@@ -7,7 +7,7 @@ const getApiBaseUrl = () => {
       return 'http://localhost:5000/api';
     }
   }
-  return '/api';
+  return 'https://dipto-visuals-msh1.vercel.app/api';
 };
 
 const API_BASE_URL = getApiBaseUrl();

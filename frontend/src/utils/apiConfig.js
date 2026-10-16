@@ -9,7 +9,7 @@ export const getApiBaseUrl = () => {
       return 'http://localhost:5000/api';
     }
   }
-  return '/api';
+  return 'https://dipto-visuals-msh1.vercel.app/api';
 };
 
 export const API_BASE_URL = getApiBaseUrl();
@@ -37,10 +37,6 @@ export const getMediaUrl = (url) => {
   }
 
   // On production (e.g. Vercel)
-  if (import.meta.env.VITE_API_URL) {
-    const apiBase = import.meta.env.VITE_API_URL.replace(/\/api\/?$/, '').replace(/\/$/, '');
-    return `${apiBase}${cleanUrl}`;
-  }
-
-  return cleanUrl;
+  const apiBase = (import.meta.env.VITE_API_URL || 'https://dipto-visuals-msh1.vercel.app').replace(/\/api\/?$/, '').replace(/\/$/, '');
+  return `${apiBase}${cleanUrl}`;
 };
