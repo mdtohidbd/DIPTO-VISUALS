@@ -139,8 +139,8 @@ const ManageClientWorks = () => {
 
   const getImageUrl = (imgStr) => {
     if (!imgStr) return 'https://placehold.co/600x400/1e293b/cbd5e1?text=No+Image'
-    if (imgStr.startsWith('http://') || imgStr.startsWith('https://')) return imgStr
-    return `http://localhost:5000${imgStr}`
+    const base = typeof window !== 'undefined' && (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') ? 'http://localhost:5000' : ''
+    return `${base}${imgStr.startsWith('/') ? '' : '/'}${imgStr}`
   }
 
   return (

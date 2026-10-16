@@ -240,8 +240,8 @@ const ManageProjects = () => {
 
   const formatMediaUrl = (url) => {
     if (!url) return '';
-    if (url.startsWith('http://') || url.startsWith('https://') || url.startsWith('blob:')) return url;
-    return `http://localhost:5000${url.startsWith('/') ? '' : '/'}${url}`;
+    const base = typeof window !== 'undefined' && (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') ? 'http://localhost:5000' : '';
+    return `${base}${url.startsWith('/') ? '' : '/'}${url}`;
   };
 
   // Filtered list

@@ -78,7 +78,7 @@ const App = () => {
   }
 
   return (
-    <BrowserRouter>
+    <BrowserRouter basename="/admin">
       <Routes>
         {/* Public auth route */}
         <Route 

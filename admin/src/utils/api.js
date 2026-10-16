@@ -1,4 +1,16 @@
-const API_BASE_URL = 'http://localhost:5000/api';
+const getApiBaseUrl = () => {
+  if (import.meta.env.VITE_API_URL) {
+    return import.meta.env.VITE_API_URL.replace(/\/$/, '');
+  }
+  if (typeof window !== 'undefined') {
+    if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
+      return 'http://localhost:5000/api';
+    }
+  }
+  return '/api';
+};
+
+const API_BASE_URL = getApiBaseUrl();
 
 const getHeaders = (isMultipart = false) => {
   const token = localStorage.getItem('token');
