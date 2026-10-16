@@ -41,7 +41,10 @@ CLAUDE.md
 # Local database and uploaded files
 backend/data/
 backend/uploads/
-backend/.env
+.env
+.env.*
+*.env
+!.env.example
 **/node_modules
 **/dist
 .vite/

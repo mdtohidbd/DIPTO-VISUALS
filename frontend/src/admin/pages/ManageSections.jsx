@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { api } from '../utils/api';
+import { getMediaUrl } from '../../utils/apiConfig';
 import { DEFAULT_CONFIG } from '../../context/SiteConfigContext';
 import { DynamicIcon, AVAILABLE_ICON_NAMES } from '../../utils/iconMap';
 import { 
@@ -1497,7 +1498,7 @@ export const ManageSections = () => {
                       <div className="flex items-center gap-3 min-w-0">
                         <div className="w-28 h-16 bg-black rounded-lg overflow-hidden relative flex-shrink-0 border border-slate-700 shadow-md">
                           <video
-                            src={config.whyChooseUsVideoUrl.startsWith('http') ? config.whyChooseUsVideoUrl : `http://localhost:5000${config.whyChooseUsVideoUrl}`}
+                            src={getMediaUrl(config.whyChooseUsVideoUrl)}
                             className="w-full h-full object-cover"
                             muted
                             playsInline
@@ -1523,7 +1524,7 @@ export const ManageSections = () => {
                       </div>
                       <div className="flex items-center gap-2 self-end sm:self-center">
                         <a
-                          href={config.whyChooseUsVideoUrl.startsWith('http') ? config.whyChooseUsVideoUrl : `http://localhost:5000${config.whyChooseUsVideoUrl}`}
+                          href={getMediaUrl(config.whyChooseUsVideoUrl)}
                           target="_blank"
                           rel="noreferrer"
                           className="px-2.5 py-1.5 rounded-lg bg-slate-800 text-slate-300 hover:text-white text-xs font-medium flex items-center gap-1"

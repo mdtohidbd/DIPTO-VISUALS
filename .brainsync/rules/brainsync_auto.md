@@ -1,7 +1,7 @@
 
 
 # Project Memory — DIPTO-VISUALS
-> 39 notes | Score threshold: >40
+> 40 notes | Score threshold: >40
 
 ## Safety — Never Run Destructive Commands
 

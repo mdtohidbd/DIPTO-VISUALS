@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Film } from 'lucide-react';
 import Cards from './Cards';
 import VideoLightbox from './VideoLightbox';
+import { API_BASE_URL, getMediaUrl } from '../utils/apiConfig';
 
 // Real Estate Video Projects
 const DEFAULT_VIDEO_PROJECTS = [
@@ -96,21 +97,17 @@ const Projects = () => {
   const [selectedVideo, setSelectedVideo] = useState(null);
 
   useEffect(() => {
-    fetch('http://localhost:5000/api/projects')
+    fetch(`${API_BASE_URL}/projects`)
       .then((res) => res.json())
       .then((data) => {
         if (Array.isArray(data) && data.length > 0) {
           const mapped = data.map((item, index) => {
             const defaultItem = DEFAULT_VIDEO_PROJECTS[index % DEFAULT_VIDEO_PROJECTS.length];
             const rawVideo = item.videoUrl || defaultItem.videoUrl;
-            const formattedVideo = rawVideo && rawVideo.startsWith('/uploads')
-              ? `http://localhost:5000${rawVideo}`
-              : rawVideo;
+            const formattedVideo = getMediaUrl(rawVideo);
 
             const rawImage = item.image || defaultItem.image;
-            const formattedImage = rawImage && rawImage.startsWith('/uploads')
-              ? `http://localhost:5000${rawImage}`
-              : rawImage;
+            const formattedImage = getMediaUrl(rawImage);
 
             return {
               id: item.id || `proj_${index}`,

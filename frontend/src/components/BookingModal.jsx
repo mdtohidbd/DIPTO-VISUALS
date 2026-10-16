@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { API_BASE_URL } from '../utils/apiConfig';
 import { motion, AnimatePresence } from 'framer-motion';
 import { 
   X, 
@@ -109,7 +110,7 @@ export const BookingModal = ({ isOpen, onClose, initialPackage = null }) => {
 
   const logLeadToBackend = (msg) => {
     try {
-      fetch('http://localhost:5000/api/contact', {
+      fetch(`${API_BASE_URL}/contact`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({

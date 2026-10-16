@@ -6,6 +6,7 @@ import { Canvas } from '@react-three/fiber';
 import { Float, MeshDistortMaterial, Sphere, MeshWobbleMaterial } from '@react-three/drei';
 import TechFloatingIcons from './TechFloatingIcons';
 import { Film, ExternalLink, Sparkles } from 'lucide-react';
+import { API_BASE_URL, getMediaUrl } from '../utils/apiConfig';
 import Cropt from '../assets/cropt.png';
 import Sub4sub from '../assets/Sub4sub.png';
 import MVP from '../assets/MVP.png';
@@ -101,7 +102,7 @@ const RecentClientWorks = () => {
   const containerRef = useRef(null);
 
   useEffect(() => {
-    fetch('http://localhost:5000/api/client-works')
+    fetch(`${API_BASE_URL}/client-works`)
       .then((res) => res.json())
       .then((data) => {
         if (Array.isArray(data) && data.length > 0) {
@@ -111,9 +112,7 @@ const RecentClientWorks = () => {
               id: w.id || fallback.id,
               title: w.title || fallback.title,
               description: w.description || fallback.description,
-              image: w.image && w.image.startsWith('/uploads')
-                ? `http://localhost:5000${w.image}`
-                : fallback.image,
+              image: getMediaUrl(w.image || fallback.image),
               link: w.link || fallback.link,
               buttonText: w.buttonText || fallback.buttonText,
               metrics: w.metrics || fallback.metrics,

@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { api } from '../utils/api';
+import { getMediaUrl } from '../../utils/apiConfig';
 import { 
   Plus, 
   Edit2, 
@@ -239,9 +240,7 @@ const ManageProjects = () => {
   };
 
   const formatMediaUrl = (url) => {
-    if (!url) return '';
-    if (url.startsWith('http://') || url.startsWith('https://') || url.startsWith('blob:')) return url;
-    return `http://localhost:5000${url.startsWith('/') ? '' : '/'}${url}`;
+    return getMediaUrl(url);
   };
 
   // Filtered list

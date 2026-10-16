@@ -389,7 +389,7 @@ const ManageTheme = () => {
 
         <div className="flex items-center gap-3">
           <a
-            href="http://localhost:5173"
+            href="/"
             target="_blank"
             rel="noreferrer"
             className="px-4 py-2.5 bg-slate-800 hover:bg-slate-700 text-slate-200 rounded-xl text-xs font-semibold flex items-center gap-2 border border-slate-700 transition-all shadow-sm"

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { api } from '../utils/api'
+import { getMediaUrl } from '../../utils/apiConfig'
 import { Plus, Edit2, Trash2, X, Upload, ExternalLink, AlertCircle, Check, Tag } from 'lucide-react'
 
 const ManageClientWorks = () => {
@@ -139,9 +140,7 @@ const ManageClientWorks = () => {
 
   const getImageUrl = (imgStr) => {
     if (!imgStr) return 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=600&q=80';
-    if (imgStr.startsWith('http://') || imgStr.startsWith('https://') || imgStr.startsWith('blob:') || imgStr.startsWith('data:')) return imgStr;
-    const base = typeof window !== 'undefined' && (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') ? 'http://localhost:5000' : '';
-    return `${base}${imgStr.startsWith('/') ? '' : '/'}${imgStr}`;
+    return getMediaUrl(imgStr);
   };
 
   return (

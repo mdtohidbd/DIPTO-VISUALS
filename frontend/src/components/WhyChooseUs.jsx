@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { getMediaUrl } from '../utils/apiConfig';
 import { motion, AnimatePresence } from 'framer-motion';
 import { 
   Palette, 
@@ -123,11 +124,7 @@ const WhyChooseUs = () => {
 
   // Video source resolution: check active item first, then section video, then default
   const formatMediaUrl = (url) => {
-    if (!url) return '';
-    if (url.startsWith('/uploads')) {
-      return `http://localhost:5000${url}`;
-    }
-    return url;
+    return getMediaUrl(url);
   };
 
   const currentMediaUrl = formatMediaUrl(

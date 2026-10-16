@@ -2,6 +2,7 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { Play, ArrowRight, Star, Sparkles, CheckCircle2, Film } from 'lucide-react';
 import { useSiteConfig } from '../context/SiteConfigContext';
+import { getMediaUrl } from '../utils/apiConfig';
 import profileImg from '../assets/profile.jpg';
 
 const Hero = () => {
@@ -135,7 +136,7 @@ const Hero = () => {
               <img 
                 src={
                   config.profileImage 
-                    ? (config.profileImage.startsWith('/uploads') ? `http://localhost:5000${config.profileImage}` : config.profileImage)
+                    ? getMediaUrl(config.profileImage)
                     : profileImg
                 } 
                 alt={config.ownerName || "Md Tohidul Islam"} 

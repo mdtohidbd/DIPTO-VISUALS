@@ -254,6 +254,9 @@ const seedTestimonials = [
 class MongoDatabase {
   async init() {
     try {
+      if (mongoose.connection && mongoose.connection.readyState >= 1) {
+        return;
+      }
       const uri = process.env.MONGODB_URI;
       if (!uri) {
         throw new Error('MONGODB_URI is not defined in the environment configuration.');

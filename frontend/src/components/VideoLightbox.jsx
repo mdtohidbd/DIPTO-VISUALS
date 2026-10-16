@@ -2,6 +2,7 @@ import React, { useEffect, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import ReactPlayer from 'react-player';
 import { X, Clock, Eye, Layers } from 'lucide-react';
+import { getMediaUrl } from '../utils/apiConfig';
 
 /**
  * VideoLightbox — Full-screen cinematic modal for video project playback.
@@ -30,7 +31,7 @@ const VideoLightbox = ({ project, isOpen, onClose }) => {
 
   const isVertical = project.aspectRatio === '9:16' || project.category?.includes('Short-form') || project.category?.includes('Reel');
   const rawUrl = project.videoUrl || project.video || '/videos/sample-video-1.mp4';
-  const videoSource = rawUrl && rawUrl.startsWith('/uploads') ? `http://localhost:5000${rawUrl}` : rawUrl;
+  const videoSource = getMediaUrl(rawUrl);
 
   return (
     <AnimatePresence>

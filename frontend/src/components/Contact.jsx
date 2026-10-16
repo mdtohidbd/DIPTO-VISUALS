@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { API_BASE_URL } from '../utils/apiConfig';
 import { Mail, Send, MessageSquare, Clock, Globe, ArrowRight } from 'lucide-react';
 import { useSiteConfig } from '../context/SiteConfigContext';
 import { 
@@ -38,7 +39,7 @@ const Contact = () => {
     setLoading(true);
     setStatus(null);
     try {
-      const res = await fetch('http://localhost:5000/api/contact', {
+      const res = await fetch(`${API_BASE_URL}/contact`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ name, email, projectType, message }),

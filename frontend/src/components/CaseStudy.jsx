@@ -2,6 +2,7 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { TrendingUp, CheckCircle, Video } from 'lucide-react';
 import { useSiteConfig, DEFAULT_CASE_STUDY } from '../context/SiteConfigContext';
+import { getMediaUrl } from '../utils/apiConfig';
 
 const CaseStudy = () => {
   const { config } = useSiteConfig();
@@ -12,9 +13,7 @@ const CaseStudy = () => {
     visible: { opacity: 1, y: 0, transition: { duration: 0.6 } }
   };
 
-  const imageSrc = cs.image && cs.image.startsWith('/uploads')
-    ? `http://localhost:5000${cs.image}`
-    : (cs.image || DEFAULT_CASE_STUDY.image);
+  const imageSrc = getMediaUrl(cs.image || DEFAULT_CASE_STUDY.image);
 
   const resultsList = Array.isArray(cs.results) && cs.results.length > 0
     ? cs.results

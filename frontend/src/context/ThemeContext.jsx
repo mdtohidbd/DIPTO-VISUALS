@@ -1,4 +1,5 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
+import { API_BASE_URL } from '../utils/apiConfig';
 
 const DEFAULT_THEME = {
   presetId: 'midnight-sapphire',
@@ -226,7 +227,7 @@ export const ThemeProvider = ({ children }) => {
 
   const fetchThemeFromServer = async () => {
     try {
-      const res = await fetch('http://localhost:5000/api/settings/theme');
+      const res = await fetch(`${API_BASE_URL}/settings/theme`);
       if (res.ok) {
         const data = await res.json();
         if (data && data.bgPrimary) {

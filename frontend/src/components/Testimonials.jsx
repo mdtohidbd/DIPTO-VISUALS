@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { API_BASE_URL } from '../utils/apiConfig';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
 import 'swiper/css/pagination';
@@ -53,7 +54,7 @@ const Testimonials = () => {
   const [testimonials, setTestimonials] = useState(DEFAULT_TESTIMONIALS);
 
   useEffect(() => {
-    fetch('http://localhost:5000/api/testimonials')
+    fetch(`${API_BASE_URL}/testimonials`)
       .then((res) => res.json())
       .then((data) => {
         if (Array.isArray(data) && data.length > 0) {

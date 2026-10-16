@@ -1,6 +1,7 @@
 import React, { useRef, useState } from 'react';
 import Tilt from 'react-parallax-tilt';
 import { Play, Clock, Eye } from 'lucide-react';
+import { getMediaUrl } from '../utils/apiConfig';
 
 const Cards = ({ item, onSelect }) => {
   const videoRef = useRef(null);
@@ -8,8 +9,7 @@ const Cards = ({ item, onSelect }) => {
 
   const formatMedia = (url, fallback = '') => {
     if (!url) return fallback;
-    if (url.startsWith('http://') || url.startsWith('https://') || url.startsWith('blob:') || url.startsWith('data:')) return url;
-    return `http://localhost:5000${url.startsWith('/') ? '' : '/'}${url}`;
+    return getMediaUrl(url);
   };
 
   const isVertical = item.aspectRatio === '9:16' || item.category?.includes('Short-form') || item.category?.includes('Reel');

@@ -56,6 +56,21 @@ app.use('/uploads', express.static(UPLOADS_DIR, {
   }
 }));
 
+// Ensure database is initialized before API requests
+app.use(async (req, res, next) => {
+  // Static files or root check don't strictly require db
+  if (req.path === '/' || req.path.startsWith('/uploads')) {
+    return next();
+  }
+  try {
+    await db.init();
+    next();
+  } catch (error) {
+    console.error('Database connection error in request:', error);
+    res.status(500).json({ message: 'Database connection error', error: error.message });
+  }
+});
+
 // Register API Routes
 app.use('/api/auth', authRoutes);
 app.use('/api/projects', projectRoutes);
@@ -80,7 +95,7 @@ app.use((err, req, res, next) => {
   res.status(500).json({ message: err.message || 'An unexpected server error occurred.' });
 });
 
-// Initialize database and start server
+// Initialize database and start server (for standalone / local dev)
 const startServer = async () => {
   try {
     console.log('Initializing database...');
@@ -95,6 +110,8 @@ const startServer = async () => {
   }
 };
 
-startServer();
+if (!process.env.VERCEL) {
+  startServer();
+}
 
 export default app;

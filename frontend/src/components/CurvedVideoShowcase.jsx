@@ -8,6 +8,7 @@ import { EffectCoverflow, Pagination, Navigation, Autoplay } from 'swiper/module
 import { motion } from 'framer-motion';
 import { Play, ChevronLeft, ChevronRight, Film, Clock, Eye, Sparkles } from 'lucide-react';
 import VideoLightbox from './VideoLightbox';
+import { API_BASE_URL, getMediaUrl } from '../utils/apiConfig';
 
 const DEFAULT_SHOWCASE_PROJECTS = [
   {
@@ -61,23 +62,18 @@ const CurvedVideoShowcase = () => {
   const swiperRef = useRef(null);
 
   useEffect(() => {
-    fetch('http://localhost:5000/api/projects')
+    fetch(`${API_BASE_URL}/projects`)
       .then((res) => res.json())
       .then((data) => {
         if (Array.isArray(data) && data.length > 0) {
-          const getImageUrl = (imgStr) => {
-            if (!imgStr) return 'https://placehold.co/800x450/0a0f1c/ef4444?text=Cinema+Reel';
-            if (imgStr.startsWith('http://') || imgStr.startsWith('https://')) return imgStr;
-            return `http://localhost:5000${imgStr}`;
-          };
           const mapped = data.map((item, index) => {
             const fb = DEFAULT_SHOWCASE_PROJECTS[index % DEFAULT_SHOWCASE_PROJECTS.length];
             return {
               id: item.id || fb.id,
               title: item.title || fb.title,
               desc: item.desc || fb.desc,
-              image: getImageUrl(item.image) || fb.image,
-              videoUrl: item.videoUrl || fb.videoUrl,
+              image: getMediaUrl(item.image) || fb.image,
+              videoUrl: getMediaUrl(item.videoUrl) || fb.videoUrl,
               category: item.category || fb.category,
               aspectRatio: item.aspectRatio || fb.aspectRatio,
               duration: item.duration || fb.duration,

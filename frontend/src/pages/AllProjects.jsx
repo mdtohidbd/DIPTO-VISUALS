@@ -4,6 +4,7 @@ import { motion } from 'framer-motion';
 import { ArrowLeft, Film } from 'lucide-react';
 import Cards from '../components/Cards';
 import VideoLightbox from '../components/VideoLightbox';
+import { API_BASE_URL, getMediaUrl } from '../utils/apiConfig';
 
 const DEFAULT_VIDEO_PROJECTS = [
   {
@@ -87,7 +88,7 @@ const AllProjects = () => {
   useEffect(() => {
     window.scrollTo(0, 0);
 
-    fetch('http://localhost:5000/api/projects')
+    fetch(`${API_BASE_URL}/projects`)
       .then((res) => res.json())
       .then((data) => {
         if (Array.isArray(data) && data.length > 0) {
@@ -102,12 +103,8 @@ const AllProjects = () => {
               views: item.views || defaultItem.views,
               tools: item.tools || defaultItem.tools,
               desc: item.desc || defaultItem.desc,
-              image: item.image && item.image.startsWith('/uploads')
-                ? `http://localhost:5000${item.image}`
-                : item.image || defaultItem.image,
-              videoUrl: item.videoUrl && item.videoUrl.startsWith('/uploads')
-                ? `http://localhost:5000${item.videoUrl}`
-                : (item.videoUrl || defaultItem.videoUrl),
+              image: getMediaUrl(item.image || defaultItem.image),
+              videoUrl: getMediaUrl(item.videoUrl || defaultItem.videoUrl),
             };
           });
           setProjects(mapped);

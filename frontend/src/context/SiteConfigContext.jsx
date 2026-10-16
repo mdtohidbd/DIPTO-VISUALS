@@ -1,4 +1,5 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
+import { API_BASE_URL } from '../utils/apiConfig';
 
 export const DEFAULT_SERVICES = [
   { id: 'srv_1', icon: 'Home', title: 'Architectural Walkthroughs', desc: 'Stabilized 4K virtual tours engineered with dynamic speed ramping to accentuate room scale and architectural elegance.' },
@@ -398,7 +399,7 @@ export const SiteConfigProvider = ({ children }) => {
 
   const fetchConfig = async () => {
     try {
-      const res = await fetch('http://localhost:5000/api/settings/config');
+      const res = await fetch(`${API_BASE_URL}/settings/config`);
       if (res.ok) {
         const data = await res.json();
         if (data && data.brandName) {

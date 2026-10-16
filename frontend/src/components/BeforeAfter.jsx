@@ -1,6 +1,7 @@
 import React, { useState, useRef, useCallback } from 'react';
 import { Sliders, Sun } from 'lucide-react';
 import { useSiteConfig, DEFAULT_BEFORE_AFTER } from '../context/SiteConfigContext';
+import { getMediaUrl } from '../utils/apiConfig';
 
 const BeforeAfter = () => {
   const { config } = useSiteConfig();
@@ -10,13 +11,8 @@ const BeforeAfter = () => {
   const [isDragging, setIsDragging] = useState(false);
   const containerRef = useRef(null);
 
-  const rawImgSrc = ba.rawImage && ba.rawImage.startsWith('/uploads')
-    ? `http://localhost:5000${ba.rawImage}`
-    : (ba.rawImage || DEFAULT_BEFORE_AFTER.rawImage);
-
-  const gradedImgSrc = ba.gradedImage && ba.gradedImage.startsWith('/uploads')
-    ? `http://localhost:5000${ba.gradedImage}`
-    : (ba.gradedImage || DEFAULT_BEFORE_AFTER.gradedImage);
+  const rawImgSrc = getMediaUrl(ba.rawImage || DEFAULT_BEFORE_AFTER.rawImage);
+  const gradedImgSrc = getMediaUrl(ba.gradedImage || DEFAULT_BEFORE_AFTER.gradedImage);
 
   const updatePosition = useCallback((clientX) => {
     if (!containerRef.current) return;
