@@ -88,14 +88,14 @@ const siteConfigSchema = new mongoose.Schema({
   updatedAt: { type: Date, default: Date.now }
 }, { strict: false });
 
-// Models
-const AdminModel = mongoose.model('Admin', adminSchema);
-const ProjectModel = mongoose.model('Project', projectSchema);
-const ClientWorkModel = mongoose.model('ClientWork', clientWorkSchema);
-const TestimonialModel = mongoose.model('Testimonial', testimonialSchema);
-const MessageModel = mongoose.model('Message', messageSchema);
-const ThemeModel = mongoose.model('Theme', themeSchema);
-const SiteConfigModel = mongoose.model('SiteConfig', siteConfigSchema);
+// Models (Serverless safe)
+const AdminModel = mongoose.models.Admin || mongoose.model('Admin', adminSchema);
+const ProjectModel = mongoose.models.Project || mongoose.model('Project', projectSchema);
+const ClientWorkModel = mongoose.models.ClientWork || mongoose.model('ClientWork', clientWorkSchema);
+const TestimonialModel = mongoose.models.Testimonial || mongoose.model('Testimonial', testimonialSchema);
+const MessageModel = mongoose.models.Message || mongoose.model('Message', messageSchema);
+const ThemeModel = mongoose.models.Theme || mongoose.model('Theme', themeSchema);
+const SiteConfigModel = mongoose.models.SiteConfig || mongoose.model('SiteConfig', siteConfigSchema);
 
 // Seed helper arrays with real video editing projects
 const seedProjects = [
