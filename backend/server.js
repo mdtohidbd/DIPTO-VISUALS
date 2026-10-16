@@ -1,5 +1,11 @@
 import dns from 'node:dns';
-dns.setServers(['1.1.1.1', '8.8.8.8']);
+if (!process.env.VERCEL) {
+  try {
+    dns.setServers(['1.1.1.1', '8.8.8.8']);
+  } catch (e) {
+    // Ignore DNS override errors in cloud
+  }
+}
 
 import express from 'express';
 import cors from 'cors';
@@ -80,12 +86,13 @@ app.use('/api/contact', contactRoutes);
 app.use('/api/upload', uploadRoutes);
 app.use('/api/settings', settingsRoutes);
 
-// Root route
+// Root health check route (always returns 200 OK)
 app.get('/', (req, res) => {
-  res.json({
+  res.status(200).json({
     name: 'Md Tohidul Islam Portfolio API',
     status: 'Running',
-    version: '1.0.0'
+    version: '1.0.0',
+    environment: process.env.VERCEL ? 'Vercel Serverless' : 'Local Standalone'
   });
 });
 
@@ -95,8 +102,14 @@ app.use((err, req, res, next) => {
   res.status(500).json({ message: err.message || 'An unexpected server error occurred.' });
 });
 
-// Initialize database and start server (for standalone / local dev)
+// Initialize database and start server
 const startServer = async () => {
+  // On Vercel, serverless environment manages connections without app.listen()
+  if (process.env.VERCEL) {
+    db.init().catch(err => console.warn('Vercel background DB init warning:', err.message));
+    return;
+  }
+
   try {
     console.log('Initializing database...');
     await db.init();
@@ -105,8 +118,7 @@ const startServer = async () => {
       console.log(`Backend server successfully running on http://localhost:${PORT}`);
     });
   } catch (error) {
-    console.error('Failed to start server:', error);
-    process.exit(1);
+    console.error('Failed to start server locally:', error);
   }
 };
 

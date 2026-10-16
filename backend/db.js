@@ -263,7 +263,10 @@ class MongoDatabase {
       }
       
       console.log('Connecting to MongoDB Atlas...');
-      await mongoose.connect(uri);
+      await mongoose.connect(uri, {
+        serverSelectionTimeoutMS: 5000,
+        connectTimeoutMS: 5000
+      });
       console.log('MongoDB Atlas connected successfully.');
 
       // Check if Admin exists, otherwise seed initial data
